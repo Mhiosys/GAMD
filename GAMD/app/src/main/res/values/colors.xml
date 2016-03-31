@@ -1,6 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <!--<color name="colorPrimary">#3F51B5</color>-->
+    <!--<color name="colorPrimaryDark">#303F9F</color>-->
+    <!--<color name="colorAccent">#FF4081</color>-->
+
+    <color name="colorPrimary">#3b50ce</color>
+    <color name="colorPrimaryDark">#2a36b1</color>
+    <color name="colorAccent">#00b0ff</color>
+
+    <color name="AzulPandero">#004B93</color>
+    <color name="Blanco">#ffffff</color>
+    <color name="Negro">#000000</color>
+    <color name="VerdeFalabella">#005231</color>
+
+    <color name="list_item_title">#ffffff</color>
+    <color name="list_background">#3b50ce</color>
+    <color name="list_background_pressed">#2a36b1</color>
+    <color name="list_divider">#272727</color>
+    <color name="counter_text_bg">#626262</color>
+    <color name="counter_text_color">#ffffff</color>
+
+    <color name="gamdPrimaryColor">@color/md_indigo_800</color>
+    <color name="gamdPrimaryDark">@color/md_indigo_900</color>
+    <color name="gamdPrimaryBackgroundColor">@color/md_blue_500</color>
+    <color name="gamdSecondaryBackgroundColor">@color/md_blue_700</color>
+    <color name="gamdBackgroundColorAccent">@color/md_indigo_900</color>
+    <color name="gamdBackgroundColor">@color/md_grey_600</color>
+    <color name="gamdPrimaryTextColor">@color/md_white_1000</color>
+    <color name="gamdSecondaryTextColor">@color/md_yellow_500</color>
+
 </resources>

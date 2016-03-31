@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:id="@+id/svLogin"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_gravity="center_horizontal"
+    android:layout_margin="5sp"
+    android:background="@color/Blanco">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:background="@color/Blanco"
+        android:baselineAligned="false">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imgLogo"
+            android:src="@drawable/titulo"
+            android:layout_gravity="center_horizontal"
+            android:contentDescription="@string/Logo"
+            android:layout_marginTop="20sp"
+            android:layout_marginBottom="20sp" />
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtUsuario"
+            android:hint="@string/NumeroAsociado"
+            android:layout_marginTop="10sp"
+            android:layout_marginBottom="10sp" />
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:id="@+id/txtClave"
+            android:hint="@string/Clave"
+            android:layout_marginTop="10sp"
+            android:layout_marginBottom="10sp" />
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/Entrar"
+            android:id="@+id/btnEntrar"
+            android:background="@color/AzulPandero"
+            android:textColor="@color/Blanco"
+            android:textStyle="bold"
+            android:layout_gravity="bottom"
+            android:layout_marginTop="10sp"
+            android:layout_marginBottom="10sp" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="190dp"
+            android:layout_gravity="bottom">
+
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView4"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/screen"
+                android:layout_weight=".2"
+                android:contentDescription="@string/Imagen" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

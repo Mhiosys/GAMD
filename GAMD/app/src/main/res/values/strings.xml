@@ -6,12 +6,12 @@
 
     <!-- Nombres de los items -->
     <string-array name="nav_drawer_items">
-        <item >Consultas</item>
-        <item >Asamblea Virtual</item>
-        <item >Propuesta de Remate</item>
+        <item >Solicitar Consulta</item>
         <item >Registrar Consulta</item>
-        <item >Registrar Trámite</item>
-        <item >Descargar Documentos</item>
+        <item >Visualizar Consultas</item>
+        <item >Asignar Consulta</item>
+        <item >Actualizar Datos</item>
+        <item >Descargar Reporte</item>
         <item >Salir</item>
     </string-array>
 

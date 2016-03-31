@@ -118,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
 
         mDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout,
-                R.drawable.ic_drawer, //nav menu toggle icon
+                R.drawable.icon, //nav menu toggle icon
                 R.string.app_name, // nav drawer open - description for accessibility
                 R.string.app_name // nav drawer close - description for accessibility
         ) {
@@ -202,6 +202,8 @@ public class MainActivity extends AppCompatActivity {
     public void setTitle(CharSequence title) {
         mTitle = title;
         getSupportActionBar().setTitle(mTitle);
+        getSupportActionBar().setIcon(R.drawable.icon);
+        getSupportActionBar().setLogo(R.drawable.icon);
     }
 
     /**

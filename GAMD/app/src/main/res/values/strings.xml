@@ -2,17 +2,22 @@
     <string name="app_name">GAMD</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_splash">SplashActivity</string>
+    <string name="title_activity_register_user">Crear cuenta</string>
+    <string name="title_activity_recover_password">Recuperar contraseña</string>
+    <string name="title_activity_main">GAMD</string>
+    <string name="title_activity_seek_medical_attention">Solicitar Atención Médica</string>
+
     <string name="Imagen">Imagen</string>
 
     <!-- Nombres de los items -->
     <string-array name="nav_drawer_items">
-        <item >Solicitar Consulta</item>
-        <item >Registrar Consulta</item>
-        <item >Visualizar Consultas</item>
-        <item >Asignar Consulta</item>
-        <item >Actualizar Datos</item>
-        <item >Descargar Reporte</item>
-        <item >Salir</item>
+        <item>Solicitar Consulta</item>
+        <item>Registrar Consulta</item>
+        <item>Visualizar Consultas</item>
+        <item>Asignar Consulta</item>
+        <item>Actualizar Datos</item>
+        <item>Descargar Reporte</item>
+        <item>Salir</item>
     </string-array>
 
     <!-- Iconos de los items -->
@@ -26,18 +31,85 @@
         <item>@drawable/ic_photos</item>
     </array>
 
+    <!-- Nombres de los Tipos de Servicios -->
+    <string-array name="tipo_servicio_items">
+        <item>Tipo Servicio 01</item>
+        <item>Tipo Servicio 02</item>
+    </string-array>
+    <string name="Tipo_Servicio_1">Tipo Servicio 01</string>
+    <string name="Tipo_Servicio_2">Tipo Servicio 02</string>
+
+    <!-- Nombres de los Especialidades -->
+    <string-array name="especialidad_items">
+        <item>Especialidad 01</item>
+        <item>Especialidad 02</item>
+        <item>Especialidad 03</item>
+        <item>Especialidad 04</item>
+        <item>Especialidad 05</item>
+    </string-array>
+    <string name="Especialidad_1">Especialidad 01</string>
+    <string name="Especialidad_2">Especialidad 02</string>
+    <string name="Especialidad_3">Especialidad 03</string>
+    <string name="Especialidad_4">Especialidad 04</string>
+    <string name="Especialidad_5">Especialidad 05</string>
+
+    <!-- Nombres de los Servicios -->
+    <string-array name="servicio_items">
+        <item>Servicio 01</item>
+        <item>Servicio 02</item>
+        <item>Servicio 03</item>
+        <item>Servicio 04</item>
+    </string-array>
+    <string name="Servicio_1">Servicio 01</string>
+    <string name="Servicio_2">Servicio 02</string>
+    <string name="Servicio_3">Servicio 03</string>
+    <string name="Servicio_4">Servicio 04</string>
+
     <!-- Content Description -->
     <string name="desc_list_item_icon">Item Icon</string>
     <string name="imagenLeft">Left</string>
     <string name="imagenRight">Right</string>
     <string name="NumeroAsociado">Username</string>
     <string name="Clave">Contraseña</string>
+    <string name="Direccion">Dirección</string>
+    <string name="Direccion_Atencion">Dirección donde voy a atenderme</string>
+    <string name="Sintomas">Síntomas</string>
+    <string name="Ingrese_Sintomas">Ingrese síntomas</string>
+    <string name="Direccion_Destino">Dirección de Destino</string>
+    <string name="Tipo_Servicio">Tipo de Servicio</string>
+    <string name="Especialidad">Especialidad</string>
+    <string name="Icono">Icono</string>
+    <string name="Ninguno">Ninguno</string>
+    <string name="Servicio">Servicio</string>
+    <string name="Buscando_Direccion">Buscando dirección...</string>
     <string name="Logo">Logo</string>
     <string name="Entrar">Entrar</string>
     <string name="Ubicanos">Ubícanos</string>
+    <string name="Titulo">Gestión de Atención Médica a Dominicilio</string>
+    <string name="Titulo_Corto">Atención Médica a Dominicilio</string>
+    <string name="Email_Admin">admin@gamd.com</string>
     <string name="Contactanos">Contáctanos</string>
     <string name="Bienvenido">Bienvenido</string>
     <string name="Salir">Salir</string>
     <string name="drawer_open">Se abrio el menu lateral</string>
     <string name="drawer_close">Se cerro el menu lateral</string>
+    <string name="gcm_send_message">Token recuperado y enviado al servidor! Ahora puede utilizar GCM remitente para enviar mensajes posteriores a esta aplicación.</string>
+    <string name="registering_message">Contador de generación InstanceID...</string>
+    <string name="token_error_message">Se ha producido un error al ir a buscar ya sea el token InstanceID, el envío de la señal descabellada al servidor o suscribirse al tema Pub Sub. Por favor, intente ejecutar de nuevo la muestra.</string>
+    <string name="Olvido_Clave">Olvidé mi contraseña</string>
+    <string name="Crear_Nueva_Cuenta">Crear nueva cuenta</string>
+    <string name="Olvido_Clave_Subrayado"><u>Olvidé mi contraseña</u></string>
+    <string name="Solicitar">Solicitar</string>
+    <string name="Pedir_Aqui">Pedir aquí</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="Vacio">Vacio</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="map_not_ready">Mapa no está disponible</string>
+
+    <!--    Permissions    -->
+    <string name="permission_rationale_location">Se requiere acceso al servicio de localización para demostrar la \ característica de "mi ubicación \ ', que muestra su ubicación actual en el mapa.</string>
+    <string name="location_permission_denied">Se requiere el permiso de ubicación</string>
+    <string name="permission_required_toast">Permiso de ubicación denegado</string>
 </resources>

@@ -7,6 +7,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+
     <style name="AppThemeContent" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/gamdPrimaryColor</item>
@@ -32,7 +33,7 @@
         <item name="android:windowBackground">@color/gamdBackgroundColor</item>
     </style>
 
-    <style name="Theme.Gamd" parent="Theme.Base"/>
+    <style name="Theme.Gamd" parent="Theme.Base" />
 
     <style name="ActionBarThemeOverlay" parent="">
         <item name="android:textColorPrimary">@color/gamdPrimaryTextColor</item>

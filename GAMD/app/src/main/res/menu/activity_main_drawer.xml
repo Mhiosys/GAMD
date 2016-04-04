@@ -20,12 +20,9 @@
         <menu>
             <item
                 android:id="@+id/nav_share"
+                android:actionProviderClass="android.widget.ShareActionProvider"
                 android:icon="@drawable/ic_menu_share"
                 android:title="@string/title_fragment_compartir" />
-            <item
-                android:id="@+id/nav_contact"
-                android:icon="@drawable/ic_mail"
-                android:title="@string/title_fragment_contacto" />
             <item
                 android:id="@+id/nav_about"
                 android:icon="@drawable/ic_sim_card_alert_24dp"

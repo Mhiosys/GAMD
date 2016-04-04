@@ -1,5 +1,6 @@
 package app.gamd;
 
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -10,7 +11,6 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.design.widget.NavigationView;
 import android.support.v4.content.LocalBroadcastManager;
@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity
     private BroadcastReceiver mRegistrationBroadcastReceiver;
     private String token;
     SharedPreferences sharedPreferences;
+    ProgressDialog progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -247,18 +248,23 @@ public class MainActivity extends AppCompatActivity
             fragment = new NotificationFragment();
             fragmentTransaction = true;
         } else if (id == R.id.nav_share) {
-            item.setChecked(true);
-            getSupportActionBar().setTitle(item.getTitle());
+            Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+            sharingIntent.setType("text/plain");
+            String shareBody = Constantes.SHARED_MY_APPLICATION;
+            sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, Constantes.SUBJECT_SEND);
+            sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+            startActivity(Intent.createChooser(sharingIntent, "Share via"));
 
-        } else if (id == R.id.nav_contact) {
-            item.setChecked(true);
-            getSupportActionBar().setTitle(item.getTitle());
-        } else if (id == R.id.nav_about) {
+        }  else if (id == R.id.nav_about) {
             item.setChecked(true);
             getSupportActionBar().setTitle(item.getTitle());
         } else if (id == R.id.nav_logout) {
-            item.setChecked(true);
-            getSupportActionBar().setTitle(item.getTitle());
+
+            sharedPreferences.edit().remove(Constantes.SETTING_USERNAME).commit();
+            Intent intentLogin = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(intentLogin);
+            finish();
+
         }
 
         if(fragmentTransaction){

@@ -32,6 +32,8 @@ public class Constantes {
     public static final String NO_SE_ENCONTRARON_MEDICOS= "No hay médicos disponibles cercanos a 2 KM";
     public static final String UBICACION_CANCELADA = "Ubicación cancelada";
     public static final String ENVIANDO_SOLICITUD = "Enviando solicitud";
+    public static final String SHARED_MY_APPLICATION = "Compartimos nuestra nueva aplicación Gestión de Atención Médica a Domicilio";
+    public static final String SUBJECT_SEND= "Gestión de Atención Médica a Domicilio";
 
     public static final String ADDRESS_COMPLETE = "addressComplete";
 

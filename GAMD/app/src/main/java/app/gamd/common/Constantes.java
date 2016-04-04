@@ -14,6 +14,9 @@ public class Constantes {
     public static final String SETTING_USUARIOID = "USUARIOID";
     public static final String SETTING_USERNAME = "USERNAME";
     public static final String SETTING_CLAVE = "CLAVE";
+    public static final String SETTING_EMAIL = "EMAIL";
+    public static final String SETTING_ROLID = "ROLID";
+    public static final String SETTING_TELEFONO = "TELEFONO";
     public static final String SETTING_NOMBRECOMPLETO = "NOMBRECOMPLETO";
     public static final String SETTING_CONTINUAR = "CONTINUAR";
     public static final String LATITUD = "LATITUD";
@@ -25,6 +28,12 @@ public class Constantes {
     public static final String USUARIO_INACTIVO = "Usuario inactivo";
     public static final long EXPIRATION_TIME_MS = 1000 * 3600 * 24 * 7;
     public static final String INGRESE_TODOS_LOS_DATOS = "Ingrese todos los datos";
+    public static final String SE_ENCONTRARON_MEDICOS= "Se encontraron los siguientes Médicos más cercanos a 2 KM";
+    public static final String NO_SE_ENCONTRARON_MEDICOS= "No hay médicos disponibles cercanos a 2 KM";
+    public static final String UBICACION_CANCELADA = "Ubicación cancelada";
+    public static final String ENVIANDO_SOLICITUD = "Enviando solicitud";
+
+    public static final String ADDRESS_COMPLETE = "addressComplete";
 
     public static final String SENT_TOKEN_TO_SERVER = "sentTokenToServer";
     public static final String REGISTRATION_COMPLETE = "registrationComplete";

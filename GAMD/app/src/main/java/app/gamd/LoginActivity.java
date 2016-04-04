@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -78,6 +79,7 @@ public class LoginActivity extends AppCompatActivity {
             btnEntrar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    final View viewLogin = v;
                     if (validarEnvio()) {
                         progress = new ProgressDialog(LoginActivity.this);
                         progress.setMessage("Iniciando Sesión ...");
@@ -89,7 +91,21 @@ public class LoginActivity extends AppCompatActivity {
                         usuarioModel.setUsername(username);
                         usuarioModel.setClave(clave);
 
-                        IUsuarioService usuarioService = ServiceGenerator.createService(IUsuarioService.class);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString(Constantes.SETTING_USUARIOID, "1");
+                        editor.putString(Constantes.SETTING_USERNAME, username);
+                        editor.putString(Constantes.SETTING_CLAVE, clave);
+                        editor.putString(Constantes.SETTING_EMAIL, "mijailstell@gmail.com");
+                        editor.putString(Constantes.SETTING_ROLID, "1");
+                        editor.putString(Constantes.SETTING_TELEFONO, "997464078");
+                        editor.putString(Constantes.SETTING_CONTINUAR, "1");
+                        editor.commit();
+                        progress.dismiss();
+                        Intent intentMain = new Intent(LoginActivity.this, MainActivity.class);
+                        startActivity(intentMain);
+                        finish();
+
+                        /*IUsuarioService usuarioService = ServiceGenerator.createService(IUsuarioService.class);
                         usuarioService.getLogin(usuarioModel, new Callback<JsonResponse>() {
                             @Override
                             public void success(JsonResponse jsonResponse, Response response) {
@@ -99,37 +115,39 @@ public class LoginActivity extends AppCompatActivity {
                                     if(mapper.get("Estado").toString().equals("1")){
                                         //Guarda los valores en las preferencias compartidas
                                         SharedPreferences.Editor editor = sharedPreferences.edit();
-                                        editor.putString(Constantes.SETTING_USUARIOID, mapper.get("UsuarioAsociadoId").toString());
+                                        editor.putString(Constantes.SETTING_USUARIOID, mapper.get("Id").toString());
                                         editor.putString(Constantes.SETTING_USERNAME, mapper.get("Username").toString());
                                         editor.putString(Constantes.SETTING_CLAVE, mapper.get("Clave").toString());
-                                        editor.putString(Constantes.SETTING_NOMBRECOMPLETO, mapper.get("NombreCompleto").toString());
+                                        editor.putString(Constantes.SETTING_EMAIL, mapper.get("Email").toString());
+                                        editor.putString(Constantes.SETTING_ROLID, mapper.get("RolId").toString());
+                                        editor.putString(Constantes.SETTING_TELEFONO, mapper.get("Telefono").toString());
                                         editor.putString(Constantes.SETTING_CONTINUAR, "1");
                                         editor.commit();
 
-                                        Intent intentMenu = new Intent(LoginActivity.this, MainActivity.class);
-                                        startActivity(intentMenu);
+                                        Intent intentMain = new Intent(LoginActivity.this, MainActivity.class);
+                                        startActivity(intentMain);
                                         finish();
                                     }else{
-                                        Toast toastMessage = Toast.makeText(getApplicationContext(), Constantes.USUARIO_INACTIVO, Toast.LENGTH_LONG);
-                                        toastMessage.show();
+                                        Snackbar.make(viewLogin,  Constantes.USUARIO_INACTIVO, Snackbar.LENGTH_LONG)
+                                                .setAction("Action", null).show();
                                     }
 
                                 } else {
-                                    Toast toastMessage = Toast.makeText(getApplicationContext(), jsonResponse.getMessage(), Toast.LENGTH_LONG);
-                                    toastMessage.show();
+                                    Snackbar.make(viewLogin,  jsonResponse.getMessage(), Snackbar.LENGTH_LONG)
+                                            .setAction("Action", null).show();
                                 }
                             }
 
                             @Override
                             public void failure(RetrofitError error) {
                                 progress.dismiss();
-                                Toast toastMessage = Toast.makeText(getApplicationContext(), Constantes.ERROR_NO_CONTROLADO, Toast.LENGTH_LONG);
-                                toastMessage.show();
+                                Snackbar.make(viewLogin,  Constantes.ERROR_NO_CONTROLADO, Snackbar.LENGTH_LONG)
+                                        .setAction("Action", null).show();
                             }
-                        });
+                        });*/
                     } else {
-                        Toast toastMessage = Toast.makeText(getApplicationContext(), Constantes.INGRESE_USERNAME_CLAVE, Toast.LENGTH_SHORT);
-                        toastMessage.show();
+                        Snackbar.make(viewLogin,  Constantes.INGRESE_USERNAME_CLAVE, Snackbar.LENGTH_LONG)
+                                .setAction("Action", null).show();
                     }
                 }
             });

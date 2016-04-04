@@ -32,7 +32,7 @@ import retrofit.client.Response;
  */
 public class RegisterGcmIntentService extends IntentService {
 
-    private static final String TAG = "RegisterGcmIntentService";
+    private static final String TAG = "RegisterGcmIntentServ";
     private static final String[] TOPICS = {"global"};
 
     public RegisterGcmIntentService() {

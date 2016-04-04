@@ -6,6 +6,11 @@
     <string name="title_activity_recover_password">Recuperar contraseña</string>
     <string name="title_activity_main">GAMD</string>
     <string name="title_activity_seek_medical_attention">Solicitar Atención Médica</string>
+    <string name="title_fragment_notification">Notificaciones</string>
+    <string name="title_fragment_compartir">Compartir</string>
+    <string name="title_fragment_contacto">Contacto</string>
+    <string name="title_fragment_acerca">Acerca</string>
+    <string name="title_fragment_salir">Salir</string>
 
     <string name="Imagen">Imagen</string>
 
@@ -112,4 +117,7 @@
     <string name="permission_rationale_location">Se requiere acceso al servicio de localización para demostrar la \ característica de "mi ubicación \ ', que muestra su ubicación actual en el mapa.</string>
     <string name="location_permission_denied">Se requiere el permiso de ubicación</string>
     <string name="permission_required_toast">Permiso de ubicación denegado</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

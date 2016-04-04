@@ -18,6 +18,10 @@ public class ConsultaFragment extends Fragment  {
 
     TextView txtTitulo;
 
+    public ConsultaFragment() {
+        // Required empty public constructor
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

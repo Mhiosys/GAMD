@@ -39,5 +39,9 @@ public class Constantes {
 
     public static final String SENT_TOKEN_TO_SERVER = "sentTokenToServer";
     public static final String REGISTRATION_COMPLETE = "registrationComplete";
-    public static final String SENDER_ID = "308779398292";
+    //public static final String SENDER_ID = "308779398292";
+    public static final String SENDER_ID = "494719852448";
+    //public static final String KEY_SERVER = "AIzaSyDebUK63xm7wmbbJ56O-AM_SP586neiDto";
+    public static final String KEY_SERVER = "AIzaSyClxJKVx2-Bb4G84UE5Jd0tMJJNfKXoKdY";
+    public static final String NOTIFICATION_ID = "NOTIFICATION_ID";
 }

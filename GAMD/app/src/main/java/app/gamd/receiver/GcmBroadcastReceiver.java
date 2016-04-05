@@ -4,6 +4,9 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -69,21 +72,30 @@ public class GcmBroadcastReceiver extends GcmListenerService {
      */
     private void sendNotification(int requestCode, String message) {
         Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra(Constantes.EXTRA_MESSAGE, requestCode);
+        intent.putExtra(Constantes.NOTIFICATION_ID, requestCode);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, requestCode, intent,
                 PendingIntent.FLAG_ONE_SHOT);
 
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        CharSequence ticker ="Nueva entrada en Zona";
+        Bitmap icon = BitmapFactory.decodeResource(getApplicationContext().getResources(),
+                R.drawable.icon);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.drawable.icon)
-                .setContentTitle("Notificación Push")
+                .setSmallIcon(R.drawable.ic_sms)
+                .setLargeIcon(icon)
+                .setContentTitle("GAMD - Solicitud Aceptada")
                 .setContentText(message)
-                .setAutoCancel(true)
+                        //.setAutoCancel(true)
                 .setWhen(System.currentTimeMillis())
+                .setLights(Color.RED, 1, 0)
                 .setSound(defaultSoundUri)
+                .setVibrate(new long[]{100, 250, 100, 500})
+                .addAction(R.drawable.cast_ic_notification_1, ticker, pendingIntent)
                 .setContentIntent(pendingIntent)
                 .setTicker("Push: Mensajería");
+
+
 
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);

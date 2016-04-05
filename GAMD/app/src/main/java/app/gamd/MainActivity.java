@@ -69,56 +69,56 @@ public class MainActivity extends AppCompatActivity
             Intent intentLogin = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(intentLogin);
             finish();
-        }
+        }else{
+            toolbar = (Toolbar) findViewById(R.id.toolbar);
+            toolbar.setTitle(R.string.title_activity_main);
+            toolbar.setLogo(R.drawable.icon);
+            setSupportActionBar(toolbar);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle(R.string.title_activity_main);
-        toolbar.setLogo(R.drawable.icon);
-        setSupportActionBar(toolbar);
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                    this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+            drawer.setDrawerListener(toggle);
+            toggle.syncState();
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
+            NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+            navigationView.setNavigationItemSelectedListener(this);
+            ((TextView)navigationView.getHeaderView(0).findViewById(R.id.txtUsuarioMenu)).setText(username);
+            ((TextView)navigationView.getHeaderView(0).findViewById(R.id.txtTelefonoMenu)).setText(telefono);
+            navigationView.getMenu().getItem(0).setChecked(true);
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-        ((TextView)navigationView.getHeaderView(0).findViewById(R.id.txtUsuarioMenu)).setText(username);
-        ((TextView)navigationView.getHeaderView(0).findViewById(R.id.txtTelefonoMenu)).setText(telefono);
-        navigationView.getMenu().getItem(0).setChecked(true);
+            Fragment fragment = new MapFragment();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.linearLayoutMain, fragment)
+                    .commit();
 
-        Fragment fragment = new MapFragment();
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.linearLayoutMain, fragment)
-                .commit();
+            mRegistrationBroadcastReceiver = new BroadcastReceiver() {
+                @Override
+                public void onReceive(Context context, Intent intent) {
 
-        mRegistrationBroadcastReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-
-                SharedPreferences sharedPreferences =
-                        PreferenceManager.getDefaultSharedPreferences(context);
-                boolean sentToken = sharedPreferences
-                        .getBoolean(Constantes.SENT_TOKEN_TO_SERVER, false);
-                if (sentToken) {
-                    Toast.makeText(getApplicationContext(), getString(R.string.gcm_send_message), Toast.LENGTH_LONG).show();
-                } else {
-                    Toast.makeText(getApplicationContext(), getString(R.string.token_error_message), Toast.LENGTH_LONG).show();
+                    SharedPreferences sharedPreferences =
+                            PreferenceManager.getDefaultSharedPreferences(context);
+                    boolean sentToken = sharedPreferences
+                            .getBoolean(Constantes.SENT_TOKEN_TO_SERVER, false);
+                    if (sentToken) {
+                        Toast.makeText(getApplicationContext(), getString(R.string.gcm_send_message), Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), getString(R.string.token_error_message), Toast.LENGTH_LONG).show();
+                    }
                 }
-            }
-        };
+            };
 
-        // Registrando BroadcastReceiver
-        registerReceiver();
+            // Registrando BroadcastReceiver
+            registerReceiver();
 
-        if (checkPlayServices()) {
-            //Obtenemos el Registration ID guardado
-            token = getRegistrationId(getApplicationContext());
-            if(token.equals("")){
-                // Inicia IntentService el registro de esta aplicación en GCM.
-                Intent intent = new Intent(this, RegisterGcmIntentService.class);
-                startService(intent);
+            if (checkPlayServices()) {
+                //Obtenemos el Registration ID guardado
+                token = getRegistrationId(getApplicationContext());
+                if(token.equals("")){
+                    // Inicia IntentService el registro de esta aplicación en GCM.
+                    Intent intent = new Intent(this, RegisterGcmIntentService.class);
+                    startService(intent);
+                }
             }
         }
     }

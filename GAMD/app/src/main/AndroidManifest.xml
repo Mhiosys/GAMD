@@ -48,7 +48,12 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <action android:name="app.gamd.MESSAGE" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity android:name=".LoginActivity" />
         <activity android:name=".RegisterUserActivity" />
         <activity android:name=".RecoverPasswordActivity" />
@@ -60,7 +65,6 @@
             android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-
                 <category android:name="app.gamd" />
             </intent-filter>
         </receiver>

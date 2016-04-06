@@ -75,6 +75,7 @@
     <string name="imagenLeft">Left</string>
     <string name="imagenRight">Right</string>
     <string name="NumeroAsociado">Username</string>
+    <string name="Correo">Correo</string>
     <string name="Clave">Contraseña</string>
     <string name="Direccion">Dirección</string>
     <string name="Direccion_Atencion">Dirección donde voy a atenderme</string>
@@ -100,7 +101,7 @@
     <string name="drawer_close">Se cerro el menu lateral</string>
     <string name="gcm_send_message">Token recuperado y enviado al servidor! Ahora puede utilizar GCM remitente para enviar mensajes posteriores a esta aplicación.</string>
     <string name="registering_message">Contador de generación InstanceID...</string>
-    <string name="token_error_message">Se ha producido un error al ir a buscar ya sea el token InstanceID, el envío de la señal descabellada al servidor o suscribirse al tema Pub Sub. Por favor, intente ejecutar de nuevo la muestra.</string>
+    <string name="token_error_message">Se ha producido un error al ir a buscar ya sea el token de Notificaciones.</string>
     <string name="Olvido_Clave">Olvidé mi contraseña</string>
     <string name="Crear_Nueva_Cuenta">Crear nueva cuenta</string>
     <string name="Olvido_Clave_Subrayado"><u>Olvidé mi contraseña</u></string>

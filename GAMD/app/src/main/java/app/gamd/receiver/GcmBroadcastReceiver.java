@@ -82,7 +82,7 @@ public class GcmBroadcastReceiver extends GcmListenerService {
         Bitmap icon = BitmapFactory.decodeResource(getApplicationContext().getResources(),
                 R.drawable.icon);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.drawable.ic_sms)
+                .setSmallIcon(R.drawable.icon)
                 .setLargeIcon(icon)
                 .setContentTitle("GAMD - Solicitud Aceptada")
                 .setContentText(message)
@@ -93,7 +93,7 @@ public class GcmBroadcastReceiver extends GcmListenerService {
                 .setVibrate(new long[]{100, 250, 100, 500})
                 .addAction(R.drawable.cast_ic_notification_1, ticker, pendingIntent)
                 .setContentIntent(pendingIntent)
-                .setTicker("Push: Mensajería");
+                .setTicker("GAMD - Notificacion");
 
 
 

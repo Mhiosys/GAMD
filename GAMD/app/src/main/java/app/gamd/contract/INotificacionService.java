@@ -12,7 +12,4 @@ import retrofit.http.POST;
 public interface INotificacionService {
     @POST("/api/Notificacion/Add")
     void add(@Body NotificacionModel notificacionModel, Callback<JsonResponse> cb);
-
-    @POST("/api/Notificacion/SendMessage")
-    void sendMessage(@Body NotificacionModel notificacionModel, Callback<JsonResponse> cb);
 }

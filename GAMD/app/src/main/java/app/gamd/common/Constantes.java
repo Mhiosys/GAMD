@@ -11,12 +11,12 @@ public class Constantes {
     public static final String APP_VERSION = "APP_VERSION";
     public static final String EXPIRATION_TIME = "EXPIRATION_TIME";
     public static final String PREFERENCES = "PREFERENCES";
+    public static final String SETTING_ACTIVO = "1.0";
     public static final String SETTING_USUARIOID = "USUARIOID";
     public static final String SETTING_USERNAME = "USERNAME";
-    public static final String SETTING_CLAVE = "CLAVE";
-    public static final String SETTING_EMAIL = "EMAIL";
-    public static final String SETTING_ROLID = "ROLID";
-    public static final String SETTING_TELEFONO = "TELEFONO";
+    public static final String SETTING_APELLIDO = "APELLIDO";
+    public static final String SETTING_NOMBRE = "NOMBRE";
+    public static final String SETTING_CELULAR = "CELULAR";
     public static final String SETTING_NOMBRECOMPLETO = "NOMBRECOMPLETO";
     public static final String SETTING_CONTINUAR = "CONTINUAR";
     public static final String LATITUD = "LATITUD";

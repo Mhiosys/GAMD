@@ -5,8 +5,9 @@ package app.gamd.model;
  */
 public class NotificacionModel {
     private String Username;
-    private String CodigoGCM;
+    private String CodigoGcm;
     private String Mensaje;
+    private String CodigoDispositivo;
 
     public String getUsername() {
         return Username;
@@ -16,12 +17,12 @@ public class NotificacionModel {
         Username = username;
     }
 
-    public String getCodigoGCM() {
-        return CodigoGCM;
+    public String getCodigoGcm() {
+        return CodigoGcm;
     }
 
-    public void setCodigoGCM(String codigoGCM) {
-        CodigoGCM = codigoGCM;
+    public void setCodigoGcm(String codigoGcm) {
+        CodigoGcm = codigoGcm;
     }
 
     public String getMensaje() {
@@ -30,5 +31,13 @@ public class NotificacionModel {
 
     public void setMensaje(String mensaje) {
         Mensaje = mensaje;
+    }
+
+    public String getCodigoDispositivo() {
+        return CodigoDispositivo;
+    }
+
+    public void setCodigoDispositivo(String codigoDispositivo) {
+        CodigoDispositivo = codigoDispositivo;
     }
 }

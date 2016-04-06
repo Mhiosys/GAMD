@@ -10,6 +10,7 @@ public class SeekMedicalAttentionModel {
     private double Latitud;
     private double Longitud;
     private int ClienteId;
+    private String ClienteUserName;
 
     public String getServicioId() {
         return ServicioId;
@@ -57,5 +58,13 @@ public class SeekMedicalAttentionModel {
 
     public void setClienteId(int clienteId) {
         ClienteId = clienteId;
+    }
+
+    public String getClienteUserName() {
+        return ClienteUserName;
+    }
+
+    public void setClienteUserName(String clienteUserName) {
+        ClienteUserName = clienteUserName;
     }
 }

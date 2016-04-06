@@ -30,7 +30,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:id="@+id/txtUsuario"
-            android:hint="@string/NumeroAsociado"
+            android:hint="@string/Correo"
             android:layout_marginTop="10sp"
             android:layout_marginBottom="10sp" />
 

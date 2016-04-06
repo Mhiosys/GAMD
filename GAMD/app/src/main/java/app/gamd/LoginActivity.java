@@ -11,14 +11,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.Map;
 
 import app.gamd.common.Constantes;
 import app.gamd.common.JsonResponse;
-import app.gamd.contract.IUsuarioService;
-import app.gamd.model.UsuarioModel;
+import app.gamd.contract.IClienteService;
+import app.gamd.model.LoginModel;
 import app.gamd.service.ServiceGenerator;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -87,53 +86,38 @@ public class LoginActivity extends AppCompatActivity {
 
                         final String username = txtUsuario.getText().toString();
                         final String clave = txtClave.getText().toString();
-                        UsuarioModel usuarioModel = new UsuarioModel();
-                        usuarioModel.setUsername(username);
-                        usuarioModel.setClave(clave);
+                        LoginModel loginModel = new LoginModel();
+                        loginModel.setUsername(username);
+                        loginModel.setPassword(clave);
 
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putString(Constantes.SETTING_USUARIOID, "1");
-                        editor.putString(Constantes.SETTING_USERNAME, username);
-                        editor.putString(Constantes.SETTING_CLAVE, clave);
-                        editor.putString(Constantes.SETTING_EMAIL, "mijailstell@gmail.com");
-                        editor.putString(Constantes.SETTING_ROLID, "1");
-                        editor.putString(Constantes.SETTING_TELEFONO, "997464078");
-                        editor.putString(Constantes.SETTING_CONTINUAR, "1");
-                        editor.commit();
-                        progress.dismiss();
-                        Intent intentMain = new Intent(LoginActivity.this, MainActivity.class);
-                        startActivity(intentMain);
-                        finish();
-
-                        /*IUsuarioService usuarioService = ServiceGenerator.createService(IUsuarioService.class);
-                        usuarioService.getLogin(usuarioModel, new Callback<JsonResponse>() {
+                        IClienteService clienteService = ServiceGenerator.createService(IClienteService.class);
+                        clienteService.getGetUserCliente(loginModel, new Callback<JsonResponse>() {
                             @Override
                             public void success(JsonResponse jsonResponse, Response response) {
                                 progress.dismiss();
                                 if (jsonResponse.isSuccess()) {
                                     Map mapper = (Map) jsonResponse.getData();
-                                    if(mapper.get("Estado").toString().equals("1")){
+                                    if (mapper.get("Estado").toString().equals(Constantes.SETTING_ACTIVO)) {
                                         //Guarda los valores en las preferencias compartidas
                                         SharedPreferences.Editor editor = sharedPreferences.edit();
-                                        editor.putString(Constantes.SETTING_USUARIOID, mapper.get("Id").toString());
+                                        editor.putInt(Constantes.SETTING_USUARIOID, (int)Double.parseDouble(mapper.get("Id").toString()));
                                         editor.putString(Constantes.SETTING_USERNAME, mapper.get("Username").toString());
-                                        editor.putString(Constantes.SETTING_CLAVE, mapper.get("Clave").toString());
-                                        editor.putString(Constantes.SETTING_EMAIL, mapper.get("Email").toString());
-                                        editor.putString(Constantes.SETTING_ROLID, mapper.get("RolId").toString());
-                                        editor.putString(Constantes.SETTING_TELEFONO, mapper.get("Telefono").toString());
+                                        editor.putString(Constantes.SETTING_NOMBRE, mapper.get("Nombre").toString());
+                                        editor.putString(Constantes.SETTING_APELLIDO, mapper.get("Apellido").toString());
+                                        editor.putString(Constantes.SETTING_CELULAR, mapper.get("Celular").toString());
                                         editor.putString(Constantes.SETTING_CONTINUAR, "1");
                                         editor.commit();
 
                                         Intent intentMain = new Intent(LoginActivity.this, MainActivity.class);
                                         startActivity(intentMain);
                                         finish();
-                                    }else{
-                                        Snackbar.make(viewLogin,  Constantes.USUARIO_INACTIVO, Snackbar.LENGTH_LONG)
+                                    } else {
+                                        Snackbar.make(viewLogin, Constantes.USUARIO_INACTIVO, Snackbar.LENGTH_LONG)
                                                 .setAction("Action", null).show();
                                     }
 
                                 } else {
-                                    Snackbar.make(viewLogin,  jsonResponse.getMessage(), Snackbar.LENGTH_LONG)
+                                    Snackbar.make(viewLogin, jsonResponse.getMessage(), Snackbar.LENGTH_LONG)
                                             .setAction("Action", null).show();
                                 }
                             }
@@ -141,10 +125,10 @@ public class LoginActivity extends AppCompatActivity {
                             @Override
                             public void failure(RetrofitError error) {
                                 progress.dismiss();
-                                Snackbar.make(viewLogin,  Constantes.ERROR_NO_CONTROLADO, Snackbar.LENGTH_LONG)
+                                Snackbar.make(viewLogin, Constantes.ERROR_NO_CONTROLADO, Snackbar.LENGTH_LONG)
                                         .setAction("Action", null).show();
                             }
-                        });*/
+                        });
                     } else {
                         Snackbar.make(viewLogin,  Constantes.INGRESE_USERNAME_CLAVE, Snackbar.LENGTH_LONG)
                                 .setAction("Action", null).show();

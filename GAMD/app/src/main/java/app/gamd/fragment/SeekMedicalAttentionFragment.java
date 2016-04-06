@@ -18,7 +18,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -185,12 +184,15 @@ public class SeekMedicalAttentionFragment extends Fragment {
                     final String servicioId = ((SpinnerModel) spServicio.getSelectedItem()).getCodigo();
                     final String latitud = sharedPreferences.getString(Constantes.LATITUD, "0");
                     final String longitud = sharedPreferences.getString(Constantes.LONGITUD, "0");
+                    final int clienteId = sharedPreferences.getInt(Constantes.SETTING_USUARIOID, 0);
+                    final String cliente = sharedPreferences.getString(Constantes.SETTING_USERNAME, "");
 
                     SeekMedicalAttentionModel seekMedicalAttentionModel = new SeekMedicalAttentionModel();
                     seekMedicalAttentionModel.setDireccion(direccion);
                     seekMedicalAttentionModel.setSintomas(sintomas);
                     seekMedicalAttentionModel.setServicioId(servicioId);
-                    seekMedicalAttentionModel.setClienteId(1);
+                    seekMedicalAttentionModel.setClienteId(clienteId);
+                    seekMedicalAttentionModel.setClienteUserName(cliente);
                     seekMedicalAttentionModel.setLatitud(Double.parseDouble(latitud));
                     seekMedicalAttentionModel.setLongitud(Double.parseDouble(longitud));
 
@@ -208,9 +210,8 @@ public class SeekMedicalAttentionFragment extends Fragment {
                                 for (Object item : specialistItemModels) {
                                     Map mapper = (Map) item;
                                     SpecialistModel specialistItemModelFila = new SpecialistModel();
-                                    specialistItemModelFila.setId(Integer.parseInt("0"));
+                                    specialistItemModelFila.setId((int)Double.parseDouble(mapper.get("Id").toString()));
                                     specialistItemModelFila.setDni("11111111");
-                                    //specialistItemModelFila.setId(Integer.parseInt(mapper.get("Id").toString()));
                                     //specialistItemModelFila.setDni(mapper.get("Dni").toString());
                                     specialistItemModelFila.setNombre(mapper.get("Nombre").toString());
                                     specialistItemModelFila.setApellido(mapper.get("Apellido").toString());

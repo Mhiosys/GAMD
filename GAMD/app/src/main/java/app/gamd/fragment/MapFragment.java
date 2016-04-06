@@ -7,13 +7,10 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
@@ -29,7 +26,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -40,25 +36,13 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-
 import app.gamd.MainActivity;
 import app.gamd.R;
 import app.gamd.common.Constantes;
-import app.gamd.common.JsonResponse;
 import app.gamd.common.PermissionUtils;
-import app.gamd.contract.ISpecialistService;
 import app.gamd.intentservice.GetAddressIntentService;
 import app.gamd.model.SpecialistModel;
-import app.gamd.service.ServiceGenerator;
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -78,6 +62,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback,
     SharedPreferences sharedPreferences;
     private static final String MAP_FRAGMENT_TAG = "mapView";
     private BroadcastReceiver mGetAddressBroadcastReceiver;
+    private boolean isReceiverRegistered;
 
     private Toolbar toolbar;
     private Button btnSolicitar;
@@ -92,7 +77,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback,
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         viewMapFragment = inflater.inflate(R.layout.fragment_map, container, false);
@@ -108,13 +93,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback,
             public void onReceive(Context context, Intent intent) {
                 pbBusqueda.setVisibility(ProgressBar.GONE);
                 SharedPreferences sharedPreferences =
-                        PreferenceManager.getDefaultSharedPreferences(context);
+                        getActivity().getApplicationContext().getSharedPreferences(Constantes.PREFERENCES, Context.MODE_PRIVATE);
                 String sentDireccion = sharedPreferences
                         .getString(Constantes.DIRECCION, "");
                 txtDireccion.setText(sentDireccion);
             }
         };
-
         registerReceiver();
 
         btnSolicitar.setOnClickListener(new View.OnClickListener() {
@@ -144,16 +128,25 @@ public class MapFragment extends Fragment implements OnMapReadyCallback,
         return viewMapFragment;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
+    @Override
+    public void onResume() {
+        super.onResume();
+        registerReceiver();
+    }
+
+    @Override
+    public void onPause() {
+        LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(mGetAddressBroadcastReceiver);
+        isReceiverRegistered = false;
+        super.onPause();
     }
 
     private void registerReceiver(){
-        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mGetAddressBroadcastReceiver,
-                new IntentFilter(Constantes.ADDRESS_COMPLETE));
+        if(!isReceiverRegistered) {
+            LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mGetAddressBroadcastReceiver,
+                    new IntentFilter(Constantes.ADDRESS_COMPLETE));
+            isReceiverRegistered = true;
+        }
     }
 
     @Override
@@ -184,10 +177,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback,
         if (ContextCompat.checkSelfPermission(getActivity().getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
             googleMap.setMyLocationEnabled(true);
-        } else {
-//            PermissionUtils.requestPermission(this, LOCATION_PERMISSION_REQUEST_CODE,
-//                    android.Manifest.permission.ACCESS_FINE_LOCATION, false);
         }
+
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(-12.0696208, -77.0379043), 10));
 
         googleMap.setOnMyLocationChangeListener(myLocationChangeListener);
@@ -204,6 +195,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback,
                 editor.putString(Constantes.LATITUD, Double.toString(location.getLatitude()));
                 editor.putString(Constantes.LONGITUD, Double.toString(location.getLongitude()));
                 editor.commit();
+                sendFindAddressToIntentService();
 
                 if(googleMap != null){
 
@@ -241,20 +233,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback,
                                 .zoom(16.5f)
                                 .bearing(0)
                                 .tilt(50)
-                                .build()), new GoogleMap.CancelableCallback() {
-                            @Override
-                            public void onFinish() {
-                                Intent intent = new Intent(getActivity(), GetAddressIntentService.class);
-                                getActivity().startService(intent);
-                            }
-
-                            @Override
-                            public void onCancel() {
-                                pbBusqueda.setVisibility(ProgressBar.GONE);
-                                Snackbar.make(viewMapFragment, Constantes.UBICACION_CANCELADA, Snackbar.LENGTH_SHORT)
-                                        .setAction("Action", null).show();
-                            }
-                        });
+                                .build()));
                     }
                     ubicado=true;
                 }
@@ -275,6 +254,13 @@ public class MapFragment extends Fragment implements OnMapReadyCallback,
                     == PackageManager.PERMISSION_GRANTED) {
                 googleMap.setMyLocationEnabled(true);
             }
+        }
+    }
+
+    // TODO: Rename method, update argument and hook method into UI event
+    public void onButtonPressed(Uri uri) {
+        if (mListener != null) {
+            mListener.onFragmentInteraction(uri);
         }
     }
 
@@ -306,6 +292,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback,
         }
 
         googleMap.animateCamera(update, callback);
+    }
+
+    private void sendFindAddressToIntentService() {
+        // Inicia IntentService la búsqueda de dirección
+        Intent intent = new Intent(getActivity(), GetAddressIntentService.class);
+        getActivity().startService(intent);
     }
 
     /**

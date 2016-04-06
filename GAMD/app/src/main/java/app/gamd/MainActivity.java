@@ -1,6 +1,6 @@
 package app.gamd;
 
-import android.app.ProgressDialog;
+import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -54,7 +54,6 @@ public class MainActivity extends AppCompatActivity
     private BroadcastReceiver mRegistrationBroadcastReceiver;
     private String token;
     SharedPreferences sharedPreferences;
-    ProgressDialog progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,46 +62,24 @@ public class MainActivity extends AppCompatActivity
 
         sharedPreferences = getApplicationContext().getSharedPreferences(Constantes.PREFERENCES, Context.MODE_PRIVATE);;
         String username = sharedPreferences.getString(Constantes.SETTING_USERNAME, null);
-        String telefono = sharedPreferences.getString(Constantes.SETTING_TELEFONO, null);
 
         if(username==null) {
             Intent intentLogin = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(intentLogin);
             finish();
         }else{
-            toolbar = (Toolbar) findViewById(R.id.toolbar);
-            toolbar.setTitle(R.string.title_activity_main);
-            toolbar.setLogo(R.drawable.icon);
-            setSupportActionBar(toolbar);
-
-            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-            ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                    this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-            drawer.setDrawerListener(toggle);
-            toggle.syncState();
-
-            NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-            navigationView.setNavigationItemSelectedListener(this);
-            ((TextView)navigationView.getHeaderView(0).findViewById(R.id.txtUsuarioMenu)).setText(username);
-            ((TextView)navigationView.getHeaderView(0).findViewById(R.id.txtTelefonoMenu)).setText(telefono);
-            navigationView.getMenu().getItem(0).setChecked(true);
-
-            Fragment fragment = new MapFragment();
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.linearLayoutMain, fragment)
-                    .commit();
+            setToolbar();
+            setNavigationView(username);
 
             mRegistrationBroadcastReceiver = new BroadcastReceiver() {
                 @Override
                 public void onReceive(Context context, Intent intent) {
 
                     SharedPreferences sharedPreferences =
-                            PreferenceManager.getDefaultSharedPreferences(context);
+                            getApplicationContext().getSharedPreferences(Constantes.PREFERENCES, Context.MODE_PRIVATE);
                     boolean sentToken = sharedPreferences
                             .getBoolean(Constantes.SENT_TOKEN_TO_SERVER, false);
-                    if (sentToken) {
-                        Toast.makeText(getApplicationContext(), getString(R.string.gcm_send_message), Toast.LENGTH_LONG).show();
-                    } else {
+                    if (!sentToken) {
                         Toast.makeText(getApplicationContext(), getString(R.string.token_error_message), Toast.LENGTH_LONG).show();
                     }
                 }
@@ -110,20 +87,74 @@ public class MainActivity extends AppCompatActivity
 
             // Registrando BroadcastReceiver
             registerReceiver();
-
-            if (checkPlayServices()) {
-                //Obtenemos el Registration ID guardado
-                token = getRegistrationId(getApplicationContext());
-                if(token.equals("")){
-                    // Inicia IntentService el registro de esta aplicación en GCM.
-                    Intent intent = new Intent(this, RegisterGcmIntentService.class);
-                    startService(intent);
-                }
-            }
         }
     }
 
-    private String getRegistrationId(Context context)
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        token = getRegistrationId();
+        if(token.length() == 0){
+            if (checkPlayServices()) {
+                sendRegistrationIdToIntentService();
+            }
+        } else if (!isAlreadyRegistered()) {
+            sendRegistrationIdToIntentService();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        registerReceiver();
+    }
+
+    @Override
+    protected void onPause() {
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);
+        isReceiverRegistered = false;
+        super.onPause();
+    }
+
+    private void setToolbar() {
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle(R.string.title_activity_main);
+        toolbar.setLogo(R.drawable.icon);
+        setSupportActionBar(toolbar);
+    }
+
+    private void setNavigationView(String username) {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+
+        String telefono = sharedPreferences.getString(Constantes.SETTING_CELULAR, "");
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+        ((TextView)navigationView.getHeaderView(0).findViewById(R.id.txtUsuarioMenu)).setText(username);
+        ((TextView)navigationView.getHeaderView(0).findViewById(R.id.txtTelefonoMenu)).setText(telefono);
+        navigationView.getMenu().getItem(0).setChecked(true);
+
+        Fragment fragment = null;
+        if(VerificarNotificacion()>0){
+            fragment = new NotificationFragment();
+        }else{
+            fragment = new MapFragment();
+        }
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.linearLayoutMain, fragment)
+                .commit();
+    }
+
+    private boolean isAlreadyRegistered() {
+        boolean registeredInBackend = sharedPreferences.getBoolean(Constantes.SENT_TOKEN_TO_SERVER, false);
+        return registeredInBackend;
+    }
+
+    private String getRegistrationId()
     {
         SharedPreferences prefs = getSharedPreferences(
                 MainActivity.class.getSimpleName(),
@@ -153,7 +184,7 @@ public class MainActivity extends AppCompatActivity
                 ", version=" + registeredVersion +
                 ", expira=" + expirationDate + ")");
 
-        int currentVersion = getAppVersion(context);
+        int currentVersion = getAppVersion(getApplicationContext());
 
         if (registeredVersion != currentVersion)
         {
@@ -167,6 +198,12 @@ public class MainActivity extends AppCompatActivity
         }
 
         return registrationId;
+    }
+
+    private void sendRegistrationIdToIntentService() {
+        // Inicia IntentService el registro de esta aplicación en GCM.
+        Intent intent = new Intent(this, RegisterGcmIntentService.class);
+        startService(intent);
     }
 
     private static int getAppVersion(Context context)
@@ -184,17 +221,44 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        registerReceiver();
+    private void registerReceiver(){
+        if(!isReceiverRegistered) {
+            LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
+                    new IntentFilter(Constantes.REGISTRATION_COMPLETE));
+            isReceiverRegistered = true;
+        }
     }
 
-    @Override
-    protected void onPause() {
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);
-        isReceiverRegistered = false;
-        super.onPause();
+    /**
+     * Comprueba el dispositivo para asegurarse de que tiene el servicios de Google Play APK. Si
+     * no es así, mostrar un cuadro de diálogo que permite a los usuarios descargar el APK desde
+     * Google Play Store o activar en la configuración del sistema del dispositivo.
+     */
+    private boolean checkPlayServices() {
+        GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
+        int resultCode = apiAvailability.isGooglePlayServicesAvailable(this);
+        if (resultCode != ConnectionResult.SUCCESS) {
+            if (apiAvailability.isUserResolvableError(resultCode)) {
+                apiAvailability.getErrorDialog(this, resultCode, PLAY_SERVICES_RESOLUTION_REQUEST)
+                        .show();
+            } else {
+                Log.i(TAG, "Este dispositivo no es soportado");
+                finish();
+            }
+            return false;
+        }
+        return true;
+    }
+
+    private int VerificarNotificacion(){
+        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        int notificationId=0;
+        // Cancelamos la Notificacion que hemos comenzado
+        if(getIntent().getExtras()!=null){
+            notificationId = getIntent().getExtras().getInt(Constantes.NOTIFICATION_ID, 0);
+            notificationManager.cancel(notificationId);
+        }
+        return notificationId;
     }
 
     @Override
@@ -283,34 +347,5 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onFragmentInteraction(Uri uri) {
 
-    }
-
-    private void registerReceiver(){
-        if(!isReceiverRegistered) {
-            LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
-                    new IntentFilter(Constantes.REGISTRATION_COMPLETE));
-            isReceiverRegistered = true;
-        }
-    }
-
-    /**
-     * Comprueba el dispositivo para asegurarse de que tiene el servicios de Google Play APK. Si
-     * no es así, mostrar un cuadro de diálogo que permite a los usuarios descargar el APK desde
-     * Google Play Store o activar en la configuración del sistema del dispositivo.
-     */
-    private boolean checkPlayServices() {
-        GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
-        int resultCode = apiAvailability.isGooglePlayServicesAvailable(this);
-        if (resultCode != ConnectionResult.SUCCESS) {
-            if (apiAvailability.isUserResolvableError(resultCode)) {
-                apiAvailability.getErrorDialog(this, resultCode, PLAY_SERVICES_RESOLUTION_REQUEST)
-                        .show();
-            } else {
-                Log.i(TAG, "Este dispositivo no es soportado");
-                finish();
-            }
-            return false;
-        }
-        return true;
     }
 }

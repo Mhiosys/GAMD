@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.widget.Toast;
@@ -41,24 +42,18 @@ public class RegisterGcmIntentService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(Constantes.PREFERENCES, Context.MODE_PRIVATE);
 
         try {
-            // [START register_for_gcm]
-            // Initially this call goes out to the network to retrieve the token, subsequent calls
-            // are local.
-            // R.string.gcm_defaultSenderId (the Sender ID) is typically derived from google-services.json.
-            // See https://developers.google.com/cloud-messaging/android/start for details on this file.
-            // [START get_token]
             InstanceID instanceID = InstanceID.getInstance(this);
             String token = instanceID.getToken(Constantes.SENDER_ID,
                     GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
             // [END get_token]
             Log.d(TAG, "GCM Registration Token: " + token);
+            String username = sharedPreferences.getString(Constantes.SETTING_USERNAME, "");
 
             // TODO: Implement this method to send any registration to your app's servers.
-            //sendRegistrationToServer(token);
-            setRegistrationId(getApplicationContext(), "mijailstell", token);
+            sendRegistrationToServer(username, token);
 
             // Subscribe to topic channels
             subscribeTopics(token);
@@ -87,25 +82,22 @@ public class RegisterGcmIntentService extends IntentService {
      *
      * @param token The new token.
      */
-    private void sendRegistrationToServer(String token) {
+    private void sendRegistrationToServer(String username, String token) {
         // Add custom implementation, as needed.
 
         final NotificacionModel notificationModel = new NotificacionModel();
-        notificationModel.setUsername("push");
-        notificationModel.setCodigoGCM(token);
+        notificationModel.setUsername(username);
+        notificationModel.setCodigoGcm(token);
+        //notificationModel.setCodigoDispositivo(Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID));
 
         INotificacionService notificacionService = ServiceGenerator.createService(INotificacionService.class);
         notificacionService.add(notificationModel, new Callback<JsonResponse>() {
             @Override
             public void success(JsonResponse jsonResponse, Response response) {
+                Log.d(TAG, jsonResponse.getMessage());
                 if (jsonResponse.isSuccess()) {
-                    Toast toastMessage = Toast.makeText(getApplicationContext(), "Registrado en el servidor", Toast.LENGTH_LONG);
-                    toastMessage.show();
                     //Guardamos los datos del registro
-                    setRegistrationId(getApplicationContext(), notificationModel.getUsername(), notificationModel.getCodigoGCM());
-                } else {
-                    Toast toastMessage = Toast.makeText(getApplicationContext(), "NO Registrado en el servidor", Toast.LENGTH_LONG);
-                    toastMessage.show();
+                    setRegistrationId(notificationModel.getUsername(), notificationModel.getCodigoGcm());
                 }
             }
 
@@ -117,13 +109,11 @@ public class RegisterGcmIntentService extends IntentService {
         });
     }
 
-    private void setRegistrationId(Context context, String user, String regId)
+    private void setRegistrationId(String user, String regId)
     {
-        SharedPreferences prefs = getSharedPreferences(
-                MainActivity.class.getSimpleName(),
-                Context.MODE_PRIVATE);
+        SharedPreferences prefs = getApplicationContext().getSharedPreferences(Constantes.PREFERENCES, Context.MODE_PRIVATE);
 
-        int appVersion = getAppVersion(context);
+        int appVersion = getAppVersion(getApplicationContext());
 
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString(Constantes.USER, user);

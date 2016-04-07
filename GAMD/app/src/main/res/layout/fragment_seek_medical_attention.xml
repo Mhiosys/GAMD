@@ -69,6 +69,49 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:id="@+id/imageView6"
+                    android:contentDescription="@string/imagenLeft"
+                    android:src="@drawable/ic_action_event"
+                    android:layout_weight=".1" />
+
+                <TextView
+                    android:id="@+id/lblFechaAtencion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/FechaAtencion"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorAccent"
+                    android:textColorLink="@color/colorPrimary"
+                    android:textAppearance="?android:attr/textAppearanceButton"
+                    android:textSize="@dimen/label_titulo_text_size"
+                    android:layout_weight=".9"
+                    android:gravity="left"
+                    android:textIsSelectable="false" />
+
+            </LinearLayout>
+
+
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/FechaAtencion"
+                android:id="@+id/txtFechaAtencion" />
+
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:text="@string/Vacio"
+                android:id="@+id/btnFila6"
+                android:background="@color/Negro" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:id="@+id/imageView2"
                     android:contentDescription="@string/imagenLeft"
                     android:src="@drawable/ic_action_select_all"

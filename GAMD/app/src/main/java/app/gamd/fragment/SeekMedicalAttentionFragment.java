@@ -1,5 +1,6 @@
 package app.gamd.fragment;
 
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -9,18 +10,25 @@ import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import app.gamd.MainActivity;
@@ -48,8 +56,10 @@ public class SeekMedicalAttentionFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
     Spinner spTipoServicio, spEspecialidad, spServicio;
     Button btnSolicitar;
-    EditText txtDireccionS, txtSintomas;
+    EditText txtDireccionS, txtSintomas, txtFechaAtencion;
     ProgressDialog progress;
+    private DatePickerDialog fechaPickerDialog;
+    private SimpleDateFormat dateFormatter;
     SharedPreferences sharedPreferences;
     private static final String TAG = "SeekMedicalAttention";
     private View viewSeekMedicalFragment;
@@ -66,9 +76,11 @@ public class SeekMedicalAttentionFragment extends Fragment {
         // Inflate the layout for this fragment
         viewSeekMedicalFragment = inflater.inflate(R.layout.fragment_seek_medical_attention, container, false);
         sharedPreferences = getActivity().getApplicationContext().getSharedPreferences(Constantes.PREFERENCES, Context.MODE_PRIVATE);
+        dateFormatter = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
 
         toolbar = (Toolbar)getActivity().findViewById(R.id.toolbar);
         txtDireccionS = (EditText)viewSeekMedicalFragment.findViewById(R.id.txtDireccionS);
+        txtFechaAtencion = (EditText) viewSeekMedicalFragment.findViewById(R.id.txtFechaAtencion);
         txtSintomas = (EditText)viewSeekMedicalFragment.findViewById(R.id.txtSintomas);
         btnSolicitar = (Button)viewSeekMedicalFragment.findViewById(R.id.btnSolicitar);
         spTipoServicio = (Spinner)viewSeekMedicalFragment.findViewById(R.id.spTipoServicio);
@@ -78,9 +90,10 @@ public class SeekMedicalAttentionFragment extends Fragment {
         spServicio.setEnabled(false);
 
         txtDireccionS.setText(sharedPreferences.getString(Constantes.DIRECCION, ""));
+        txtFechaAtencion.setInputType(InputType.TYPE_NULL);
         List<SpinnerModel> items = new ArrayList<SpinnerModel>(3);
-        items.add(new SpinnerModel("0",getString(R.string.Ninguno), R.drawable.ic_action_cancel));
-        items.add(new SpinnerModel("1",getString(R.string.Tipo_Servicio_1), R.drawable.ic_action_accept));
+        items.add(new SpinnerModel("0", getString(R.string.Ninguno), R.drawable.ic_action_cancel));
+        items.add(new SpinnerModel("1", getString(R.string.Tipo_Servicio_1), R.drawable.ic_action_accept));
         items.add(new SpinnerModel("2", getString(R.string.Tipo_Servicio_2), R.drawable.ic_action_accept));
         spTipoServicio.setAdapter(new SpinnerAdapter(getActivity().getApplicationContext(), R.layout.spinner_selected_item, items));
 
@@ -181,6 +194,7 @@ public class SeekMedicalAttentionFragment extends Fragment {
 
                     final String direccion = txtDireccionS.getText().toString();
                     final String sintomas = txtSintomas.getText().toString();
+                    final String fechaAtencion = txtFechaAtencion.getText().toString();
                     final String servicioId = ((SpinnerModel) spServicio.getSelectedItem()).getCodigo();
                     final String latitud = sharedPreferences.getString(Constantes.LATITUD, "0");
                     final String longitud = sharedPreferences.getString(Constantes.LONGITUD, "0");
@@ -195,6 +209,7 @@ public class SeekMedicalAttentionFragment extends Fragment {
                     seekMedicalAttentionModel.setClienteUserName(cliente);
                     seekMedicalAttentionModel.setLatitud(Double.parseDouble(latitud));
                     seekMedicalAttentionModel.setLongitud(Double.parseDouble(longitud));
+                    seekMedicalAttentionModel.setFechaAtencion(fechaAtencion);
 
                     ISeekMedicalAttentionService seekMedicalAttentionService = ServiceGenerator.createService(ISeekMedicalAttentionService.class);
                     seekMedicalAttentionService.crearSolicitud(seekMedicalAttentionModel, new Callback<JsonResponse>() {
@@ -210,7 +225,7 @@ public class SeekMedicalAttentionFragment extends Fragment {
                                 for (Object item : specialistItemModels) {
                                     Map mapper = (Map) item;
                                     SpecialistModel specialistItemModelFila = new SpecialistModel();
-                                    specialistItemModelFila.setId((int)Double.parseDouble(mapper.get("Id").toString()));
+                                    specialistItemModelFila.setId((int) Double.parseDouble(mapper.get("Id").toString()));
                                     specialistItemModelFila.setDni("11111111");
                                     //specialistItemModelFila.setDni(mapper.get("Dni").toString());
                                     specialistItemModelFila.setNombre(mapper.get("Nombre").toString());
@@ -221,7 +236,7 @@ public class SeekMedicalAttentionFragment extends Fragment {
                                     specialistItemModelListJson.add(specialistItemModelFila);
                                 }
 
-                                ((MainActivity)getActivity()).specialistItemModelListJson = specialistItemModelListJson;
+                                ((MainActivity) getActivity()).specialistItemModelListJson = specialistItemModelListJson;
 
                                 Fragment fragment = new MapFragment();
                                 getActivity().getSupportFragmentManager().beginTransaction()
@@ -253,6 +268,33 @@ public class SeekMedicalAttentionFragment extends Fragment {
             }
         });
 
+        Calendar newCalendar = Calendar.getInstance();
+
+        fechaPickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                try {
+                    Calendar newDate = Calendar.getInstance();
+                    newDate.set(year, monthOfYear, dayOfMonth);
+                    txtFechaAtencion.setText(dateFormatter.format(newDate.getTime()));
+                } catch (Exception ex) {
+                    Log.d(TAG, ex.getMessage());
+                }
+            }
+        },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+
+
+        txtFechaAtencion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    fechaPickerDialog.show();
+                } catch (Exception ex) {
+                    Log.d(TAG, ex.getMessage());
+                }
+            }
+        });
+
         return viewSeekMedicalFragment;
     }
 
@@ -265,14 +307,25 @@ public class SeekMedicalAttentionFragment extends Fragment {
 
     private boolean validarEnvio(){
         boolean result = true;
+        Date fechaAtencionDate = null;
         String direccion = this.txtDireccionS.getText().toString();
         String sintomas = this.txtSintomas.getText().toString();
+        String fechaAtencion = txtFechaAtencion.getText().toString();
         if(direccion.equals("") || sintomas.equals("")
+                || fechaAtencion.equals("")
                 || spTipoServicio.getSelectedItemPosition()==0
                 || spEspecialidad.getSelectedItemPosition()==0
                 || spServicio.getSelectedItemPosition()==0){
             result = false;
         }
+
+        try {
+            fechaAtencionDate = dateFormatter.parse(fechaAtencion);
+        } catch (ParseException ex) {
+            Log.d(TAG, ex.getMessage());
+            result = false;
+        }
+
         return result;
     }
 

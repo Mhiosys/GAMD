@@ -11,6 +11,7 @@ public class SeekMedicalAttentionModel {
     private double Longitud;
     private int ClienteId;
     private String ClienteUserName;
+    private String FechaAtencion;
 
     public String getServicioId() {
         return ServicioId;
@@ -66,5 +67,13 @@ public class SeekMedicalAttentionModel {
 
     public void setClienteUserName(String clienteUserName) {
         ClienteUserName = clienteUserName;
+    }
+
+    public String getFechaAtencion() {
+        return FechaAtencion;
+    }
+
+    public void setFechaAtencion(String fechaAtencion) {
+        FechaAtencion = fechaAtencion;
     }
 }

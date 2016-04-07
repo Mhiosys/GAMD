@@ -78,6 +78,8 @@
     <string name="Correo">Correo</string>
     <string name="Clave">Contraseña</string>
     <string name="Direccion">Dirección</string>
+    <string name="ElijaFecha">Elija Fecha</string>
+    <string name="FechaAtencion">Fecha Atención</string>
     <string name="Direccion_Atencion">Dirección donde voy a atenderme</string>
     <string name="Sintomas">Síntomas</string>
     <string name="Ingrese_Sintomas">Ingrese síntomas</string>

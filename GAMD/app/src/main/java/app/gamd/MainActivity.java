@@ -253,9 +253,14 @@ public class MainActivity extends AppCompatActivity
     private int VerificarNotificacion(){
         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         int notificationId=0;
+        String notificationMessage="";
         // Cancelamos la Notificacion que hemos comenzado
         if(getIntent().getExtras()!=null){
             notificationId = getIntent().getExtras().getInt(Constantes.NOTIFICATION_ID, 0);
+            notificationMessage = getIntent().getExtras().getString(Constantes.NOTIFICATION_MESSAGE, "");
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString(Constantes.NOTIFICATION_MESSAGE, notificationMessage);
+            editor.commit();
             notificationManager.cancel(notificationId);
         }
         return notificationId;

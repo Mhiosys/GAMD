@@ -73,6 +73,7 @@ public class GcmBroadcastReceiver extends GcmListenerService {
     private void sendNotification(int requestCode, String message) {
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra(Constantes.NOTIFICATION_ID, requestCode);
+        intent.putExtra(Constantes.NOTIFICATION_MESSAGE, message);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, requestCode, intent,
                 PendingIntent.FLAG_ONE_SHOT);

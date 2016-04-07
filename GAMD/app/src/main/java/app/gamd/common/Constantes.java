@@ -44,4 +44,5 @@ public class Constantes {
     //public static final String KEY_SERVER = "AIzaSyDebUK63xm7wmbbJ56O-AM_SP586neiDto";
     public static final String KEY_SERVER = "AIzaSyClxJKVx2-Bb4G84UE5Jd0tMJJNfKXoKdY";
     public static final String NOTIFICATION_ID = "NOTIFICATION_ID";
+    public static final String NOTIFICATION_MESSAGE = "NOTIFICATION_MESSAGE";
 }

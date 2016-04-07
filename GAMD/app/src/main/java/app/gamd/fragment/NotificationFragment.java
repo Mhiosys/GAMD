@@ -1,14 +1,17 @@
 package app.gamd.fragment;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import app.gamd.R;
+import app.gamd.common.Constantes;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -19,6 +22,9 @@ import app.gamd.R;
 public class NotificationFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
+    SharedPreferences sharedPreferences;
+    TextView lblMensaje;
+    private View viewNotificationFragment;
 
     public NotificationFragment() {
         // Required empty public constructor
@@ -29,7 +35,17 @@ public class NotificationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_notification, container, false);
+        viewNotificationFragment = inflater.inflate(R.layout.fragment_notification, container, false);
+        sharedPreferences = getActivity().getApplicationContext().getSharedPreferences(Constantes.PREFERENCES, Context.MODE_PRIVATE);
+        String mensaje = sharedPreferences.getString(Constantes.NOTIFICATION_MESSAGE, "");
+        lblMensaje = (TextView)viewNotificationFragment.findViewById(R.id.lblMensaje);
+        lblMensaje.setText(mensaje);
+
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(Constantes.NOTIFICATION_MESSAGE, "");
+        editor.commit();
+
+        return viewNotificationFragment;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

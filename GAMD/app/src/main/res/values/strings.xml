@@ -108,6 +108,7 @@
     <string name="Crear_Nueva_Cuenta">Crear nueva cuenta</string>
     <string name="Olvido_Clave_Subrayado"><u>Olvidé mi contraseña</u></string>
     <string name="Solicitar">Solicitar</string>
+    <string name="SolicitudAceptada">Solicitud Aceptada</string>
     <string name="Pedir_Aqui">Pedir aquí</string>
     <string name="title_activity_maps">Map</string>
     <string name="Vacio">Vacio</string>

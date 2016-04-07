@@ -1,13 +1,67 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="app.gamd.fragment.NotificationFragment">
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:weightSum="1">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
+    <ScrollView
+        android:layout_width="fill_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:id="@+id/scrollViewNotificacion"
+        android:layout_gravity="center_horizontal">
 
-</FrameLayout>
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:orientation="vertical"
+            android:weightSum="1">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/imageView9"
+                    android:contentDescription="@string/imagenLeft"
+                    android:src="@drawable/ic_action_select_all"
+                    android:layout_weight=".1" />
+
+                <TextView
+                    android:id="@+id/lblAceptacion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/SolicitudAceptada"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorAccent"
+                    android:textColorLink="@color/colorPrimary"
+                    android:textAppearance="?android:attr/textAppearanceButton"
+                    android:textSize="@dimen/label_titulo_text_size"
+                    android:layout_weight=".9"
+                    android:gravity="left"
+                    android:textIsSelectable="false" />
+
+            </LinearLayout>
+
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/lblMensaje"
+                android:hint="@string/Vacio" />
+
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:text="@string/Vacio"
+                android:id="@+id/btnFila9"
+                android:background="@color/Negro" />
+
+        </LinearLayout>
+
+    </ScrollView>
+</LinearLayout>

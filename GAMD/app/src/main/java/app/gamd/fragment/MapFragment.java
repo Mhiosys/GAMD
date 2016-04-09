@@ -1,13 +1,16 @@
 package app.gamd.fragment;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -70,6 +73,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback,
     private ProgressBar pbBusqueda;
     ProgressDialog progress;
     private View viewMapFragment;
+    LocationManager locationManager;
+    AlertDialog alert = null;
 
     public MapFragment() {
         // Required empty public constructor
@@ -87,6 +92,29 @@ public class MapFragment extends Fragment implements OnMapReadyCallback,
         txtDireccion = (TextView)viewMapFragment.findViewById(R.id.txtDireccion);
         pbBusqueda = (ProgressBar) viewMapFragment.findViewById(R.id.pbBusqueda);
         toolbar = (Toolbar)getActivity().findViewById(R.id.toolbar);
+
+        locationManager = (LocationManager) getActivity().getSystemService(getActivity().LOCATION_SERVICE);
+        /****Mejora****/
+        if ( !locationManager.isProviderEnabled( LocationManager.GPS_PROVIDER ) ) {
+
+            final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setMessage(Constantes.DESEA_ACTIVAR_GPS)
+                    .setCancelable(false)
+                    .setPositiveButton(Constantes.SI, new DialogInterface.OnClickListener() {
+                        public void onClick(@SuppressWarnings("unused") final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
+                            startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                        }
+                    })
+                    .setNegativeButton(Constantes.NO, new DialogInterface.OnClickListener() {
+                        public void onClick(final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
+                            dialog.cancel();
+                        }
+                    });
+            alert = builder.create();
+            alert.show();
+
+        }
+        /********/
 
         mGetAddressBroadcastReceiver = new BroadcastReceiver() {
             @Override

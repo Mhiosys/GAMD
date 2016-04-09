@@ -34,6 +34,9 @@ public class Constantes {
     public static final String ENVIANDO_SOLICITUD = "Enviando solicitud";
     public static final String SHARED_MY_APPLICATION = "Compartimos nuestra nueva aplicación Gestión de Atención Médica a Domicilio";
     public static final String SUBJECT_SEND= "Gestión de Atención Médica a Domicilio";
+    public static final String DESEA_ACTIVAR_GPS = "El sistema GPS esta desactivado, ¿Desea activarlo?";
+    public static final String SI = "Sí";
+    public static final String NO = "No";
 
     public static final String ADDRESS_COMPLETE = "addressComplete";
 

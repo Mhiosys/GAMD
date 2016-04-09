@@ -103,7 +103,7 @@ public class RegisterGcmIntentService extends IntentService {
 
             @Override
             public void failure(RetrofitError error) {
-                Toast toastMessage = Toast.makeText(getApplicationContext(), "Error no controlado", Toast.LENGTH_LONG);
+                Toast toastMessage = Toast.makeText(getApplicationContext(), Constantes.ERROR_NO_CONTROLADO, Toast.LENGTH_LONG);
                 toastMessage.show();
             }
         });

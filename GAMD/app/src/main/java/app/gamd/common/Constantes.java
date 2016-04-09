@@ -23,7 +23,7 @@ public class Constantes {
     public static final String LONGITUD = "LONGITUD";
     public static final String DIRECCION = "DIRECCION";
 
-    public static final String ERROR_NO_CONTROLADO = "Error no controlado";
+    public static final String ERROR_NO_CONTROLADO = "Conexión no establecida, sin acceso a internet";
     public static final String INGRESE_USERNAME_CLAVE = "Ingrese usuario y clave";
     public static final String USUARIO_INACTIVO = "Usuario inactivo";
     public static final long EXPIRATION_TIME_MS = 1000 * 3600 * 24 * 7;

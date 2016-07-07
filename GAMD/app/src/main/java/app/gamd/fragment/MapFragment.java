@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Point;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
@@ -53,7 +54,7 @@ import app.gamd.model.SpecialistModel;
  * {@link MapFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
  */
-public class MapFragment extends Fragment implements OnMapReadyCallback,
+public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnMapLongClickListener,
         ActivityCompat.OnRequestPermissionsResultCallback{
 
     private GoogleMap googleMap;
@@ -135,6 +136,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback,
                 Fragment fragment = new SeekMedicalAttentionFragment();
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.linearLayoutMain, fragment)
+                        .addToBackStack(null)
                         .commit();
                 toolbar.setTitle(R.string.title_activity_seek_medical_attention);
 
@@ -200,7 +202,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback,
 
         // We will provide our own zoom controls.
         googleMap.getUiSettings().setZoomControlsEnabled(true);
-
+        googleMap.setOnMapLongClickListener(this);
         // Enable the location layer. Request the location permission if needed.
         if (ContextCompat.checkSelfPermission(getActivity().getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
@@ -217,11 +219,21 @@ public class MapFragment extends Fragment implements OnMapReadyCallback,
         public void onMyLocationChange(Location location) {
             if(!ubicado)
             {
-                myLocation = new LatLng(location.getLatitude(), location.getLongitude());
-
                 SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString(Constantes.LATITUD, Double.toString(location.getLatitude()));
-                editor.putString(Constantes.LONGITUD, Double.toString(location.getLongitude()));
+                final String tienePoint = sharedPreferences.getString(Constantes.TIENEPOINT, "0");
+                if(tienePoint.equals(Constantes.SITIENEPOINT)){
+                    final String latitudPoint = sharedPreferences.getString(Constantes.LATITUD, "0");
+                    final String longitudPoint = sharedPreferences.getString(Constantes.LONGITUD, "0");
+
+                    myLocation = new LatLng(Double.parseDouble(latitudPoint), Double.parseDouble(longitudPoint));
+                }else{
+                    myLocation = new LatLng(location.getLatitude(), location.getLongitude());
+
+                    editor.putString(Constantes.LATITUD, Double.toString(location.getLatitude()));
+                    editor.putString(Constantes.LONGITUD, Double.toString(location.getLongitude()));
+                }
+
+                editor.putString(Constantes.TIENEPOINT, Constantes.NOTIENEPOINT);
                 editor.commit();
                 sendFindAddressToIntentService();
 
@@ -353,6 +365,29 @@ public class MapFragment extends Fragment implements OnMapReadyCallback,
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        public void onFragmentInteraction(Object object);
+    }
+
+    @Override
+    public void onMapLongClick(LatLng point) {
+        // We know the center, let's place the outline at a point 3/4 along the view.
+
+        myLocation = point;
+
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(Constantes.LATITUD, Double.toString(point.latitude));
+        editor.putString(Constantes.LONGITUD, Double.toString(point.longitude));
+        editor.commit();
+        sendFindAddressToIntentService();
+
+        if(googleMap != null) {
+
+            googleMap.clear();
+            googleMap.addMarker(new MarkerOptions()
+                    .position(myLocation)
+                    .title("Mi Ubicación")
+                    .snippet("Usuario")
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.user_locate)));
+        }
     }
 }

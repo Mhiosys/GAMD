@@ -36,6 +36,36 @@
         <item>@drawable/ic_photos</item>
     </array>
 
+    <!-- Nombres de los Horario -->
+    <string-array name="tipo_horario_items">
+        <item>En este momento</item>
+        <item>6:00 am - 8:00 am</item>
+        <item>8:00 am - 10:00 am</item>
+        <item>10:00 am - 12:00 am</item>
+        <item>12:00 pm - 2:00 pm</item>
+        <item>2:00 pm - 4:00 pm</item>
+        <item>4:00 pm - 6:00 pm</item>
+        <item>6:00 pm - 8:00 pm</item>
+        <item>8:00 pm - 10:00 pm</item>
+        <item>10:00 pm - 12:00 am</item>
+        <item>12:00 am - 2:00 am</item>
+        <item>2:00 am - 4:00 am</item>
+        <item>4:00 am - 6:00 am</item>
+    </string-array>
+    <string name="Horario_1">En este momento</string>
+    <string name="Horario_2">6:00 am - 8:00 am</string>
+    <string name="Horario_3">8:00 am - 10:00 am</string>
+    <string name="Horario_4">10:00 am - 12:00 am</string>
+    <string name="Horario_5">12:00 pm - 2:00 pm</string>
+    <string name="Horario_6">2:00 pm - 4:00 pm</string>
+    <string name="Horario_7">4:00 pm - 6:00 pm</string>
+    <string name="Horario_8">6:00 pm - 8:00 pm</string>
+    <string name="Horario_9">8:00 pm - 10:00 pm</string>
+    <string name="Horario_10">10:00 pm - 12:00 am</string>
+    <string name="Horario_11">12:00 am - 2:00 am</string>
+    <string name="Horario_12">2:00 am - 4:00 am</string>
+    <string name="Horario_13">4:00 am - 6:00 am</string>
+
     <!-- Nombres de los Tipos de Servicios -->
     <string-array name="tipo_servicio_items">
         <item>Tipo Servicio 01</item>
@@ -80,6 +110,7 @@
     <string name="Direccion">Dirección</string>
     <string name="ElijaFecha">Elija Fecha</string>
     <string name="FechaAtencion">Fecha Atención</string>
+    <string name="Hora_Servicio">Hora de Atención</string>
     <string name="Direccion_Atencion">Dirección donde voy a atenderme</string>
     <string name="Sintomas">Síntomas</string>
     <string name="Ingrese_Sintomas">Ingrese síntomas</string>

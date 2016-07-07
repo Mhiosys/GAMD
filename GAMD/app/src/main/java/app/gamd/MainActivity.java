@@ -1,5 +1,7 @@
 package app.gamd;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -54,6 +56,7 @@ public class MainActivity extends AppCompatActivity
     private BroadcastReceiver mRegistrationBroadcastReceiver;
     private String token;
     SharedPreferences sharedPreferences;
+    private boolean isFirstTime = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,13 +97,17 @@ public class MainActivity extends AppCompatActivity
     protected void onStart() {
         super.onStart();
 
-        token = getRegistrationId();
-        if(token.length() == 0){
-            if (checkPlayServices()) {
+        if (isFirstTime) {
+            isFirstTime = false;
+
+            token = getRegistrationId();
+            if(token.length() == 0){
+                if (checkPlayServices()) {
+                    sendRegistrationIdToIntentService();
+                }
+            } else if (!isAlreadyRegistered()) {
                 sendRegistrationIdToIntentService();
             }
-        } else if (!isAlreadyRegistered()) {
-            sendRegistrationIdToIntentService();
         }
     }
 
@@ -144,8 +151,10 @@ public class MainActivity extends AppCompatActivity
         }else{
             fragment = new MapFragment();
         }
+
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.linearLayoutMain, fragment)
+                //.addToBackStack(null)
                 .commit();
     }
 
@@ -265,12 +274,24 @@ public class MainActivity extends AppCompatActivity
         }
         return notificationId;
     }
-
+/*
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+*/
+    @Override
+    public void onBackPressed() {
+        FragmentManager fm = getFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        if (fm.getBackStackEntryCount() > 1) {
+            fm.popBackStack();
+            ft.commit();
         } else {
             super.onBackPressed();
         }
@@ -339,6 +360,7 @@ public class MainActivity extends AppCompatActivity
         if(fragmentTransaction){
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.linearLayoutMain, fragment)
+                    .addToBackStack(null)
                     .commit();
             item.setChecked(true);
             getSupportActionBar().setTitle(item.getTitle());
@@ -350,7 +372,12 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onFragmentInteraction(Uri uri) {
-
+    public void onFragmentInteraction(Object object) {
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        //ft.replace(android.R.id.content, SecondFragment.newInstance(message), SecondFragment.TAG);
+        ft.addToBackStack(null);
+        ft.commit();
     }
+
+
 }

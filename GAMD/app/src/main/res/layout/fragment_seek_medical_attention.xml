@@ -112,6 +112,47 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:id="@+id/imageViewHora"
+                    android:contentDescription="@string/imagenLeft"
+                    android:src="@drawable/ic_action_select_all"
+                    android:layout_weight=".1" />
+
+                <TextView
+                    android:id="@+id/lblHoraServicio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Hora_Servicio"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorAccent"
+                    android:textColorLink="@color/colorPrimary"
+                    android:textAppearance="?android:attr/textAppearanceButton"
+                    android:textSize="@dimen/label_titulo_text_size"
+                    android:layout_weight=".9"
+                    android:gravity="left" />
+
+            </LinearLayout>
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/spHoraServicio"
+                android:background="@drawable/spinner_selector"/>
+
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:text="@string/Vacio"
+                android:id="@+id/btnFilaHora"
+                android:background="@color/Negro" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:id="@+id/imageView2"
                     android:contentDescription="@string/imagenLeft"
                     android:src="@drawable/ic_action_select_all"

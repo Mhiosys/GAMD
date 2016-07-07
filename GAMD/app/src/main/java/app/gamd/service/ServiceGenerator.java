@@ -10,7 +10,8 @@ import retrofit.client.OkClient;
  * Created by Sigcomt on 31/03/2016.
  */
 public class ServiceGenerator {
-    public static final String API_BASE_URL = "http://gamd.somee.com/";
+    //public static final String API_BASE_URL = "http://gamd.somee.com/";
+    public static final String API_BASE_URL = "http://192.168.1.33/GAMD/";
 
     private static RestAdapter.Builder builder = new RestAdapter.Builder()
             .setEndpoint(API_BASE_URL)

@@ -54,7 +54,7 @@ import retrofit.client.Response;
 public class SeekMedicalAttentionFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
-    Spinner spTipoServicio, spEspecialidad, spServicio;
+    Spinner spHoraServicio, spTipoServicio, spEspecialidad, spServicio;
     Button btnSolicitar;
     EditText txtDireccionS, txtSintomas, txtFechaAtencion;
     ProgressDialog progress;
@@ -83,6 +83,7 @@ public class SeekMedicalAttentionFragment extends Fragment {
         txtFechaAtencion = (EditText) viewSeekMedicalFragment.findViewById(R.id.txtFechaAtencion);
         txtSintomas = (EditText)viewSeekMedicalFragment.findViewById(R.id.txtSintomas);
         btnSolicitar = (Button)viewSeekMedicalFragment.findViewById(R.id.btnSolicitar);
+        spHoraServicio = (Spinner)viewSeekMedicalFragment.findViewById(R.id.spHoraServicio);
         spTipoServicio = (Spinner)viewSeekMedicalFragment.findViewById(R.id.spTipoServicio);
         spEspecialidad = (Spinner)viewSeekMedicalFragment.findViewById(R.id.spEspecialidad);
         spServicio = (Spinner)viewSeekMedicalFragment.findViewById(R.id.spServicio);
@@ -91,7 +92,41 @@ public class SeekMedicalAttentionFragment extends Fragment {
 
         txtDireccionS.setText(sharedPreferences.getString(Constantes.DIRECCION, ""));
         txtFechaAtencion.setInputType(InputType.TYPE_NULL);
-        List<SpinnerModel> items = new ArrayList<SpinnerModel>(3);
+        List<SpinnerModel> items = new ArrayList<SpinnerModel>(14);
+        items.add(new SpinnerModel("0", getString(R.string.Ninguno), R.drawable.ic_action_cancel));
+        items.add(new SpinnerModel("1", getString(R.string.Horario_1), R.drawable.ic_action_accept));
+        items.add(new SpinnerModel("2", getString(R.string.Horario_2), R.drawable.ic_action_accept));
+        items.add(new SpinnerModel("3", getString(R.string.Horario_3), R.drawable.ic_action_accept));
+        items.add(new SpinnerModel("4", getString(R.string.Horario_4), R.drawable.ic_action_accept));
+        items.add(new SpinnerModel("5", getString(R.string.Horario_5), R.drawable.ic_action_accept));
+        items.add(new SpinnerModel("6", getString(R.string.Horario_6), R.drawable.ic_action_accept));
+        items.add(new SpinnerModel("7", getString(R.string.Horario_7), R.drawable.ic_action_accept));
+        items.add(new SpinnerModel("8", getString(R.string.Horario_8), R.drawable.ic_action_accept));
+        items.add(new SpinnerModel("9", getString(R.string.Horario_9), R.drawable.ic_action_accept));
+        items.add(new SpinnerModel("10", getString(R.string.Horario_10), R.drawable.ic_action_accept));
+        items.add(new SpinnerModel("11", getString(R.string.Horario_11), R.drawable.ic_action_accept));
+        items.add(new SpinnerModel("12", getString(R.string.Horario_12), R.drawable.ic_action_accept));
+        items.add(new SpinnerModel("13", getString(R.string.Horario_13), R.drawable.ic_action_accept));
+        spHoraServicio.setAdapter(new SpinnerAdapter(getActivity().getApplicationContext(), R.layout.spinner_selected_item, items));
+
+        spHoraServicio.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+                String codigo = ((TextView) view.findViewById(R.id.codigo)).getText().toString();
+
+                if(codigo.equals(Constantes.ENESTEMOMENTO)){
+                    Snackbar.make(viewSeekMedicalFragment, Constantes.MENSAJEENESTEMOMENTO, Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                //nothing
+            }
+        });
+
+        items = new ArrayList<SpinnerModel>(3);
         items.add(new SpinnerModel("0", getString(R.string.Ninguno), R.drawable.ic_action_cancel));
         items.add(new SpinnerModel("1", getString(R.string.Tipo_Servicio_1), R.drawable.ic_action_accept));
         items.add(new SpinnerModel("2", getString(R.string.Tipo_Servicio_2), R.drawable.ic_action_accept));
@@ -195,6 +230,7 @@ public class SeekMedicalAttentionFragment extends Fragment {
                     final String direccion = txtDireccionS.getText().toString();
                     final String sintomas = txtSintomas.getText().toString();
                     final String fechaAtencion = txtFechaAtencion.getText().toString();
+                    final String horaAtencion = ((SpinnerModel) spHoraServicio.getSelectedItem()).getNombre();
                     final String servicioId = ((SpinnerModel) spServicio.getSelectedItem()).getCodigo();
                     final String latitud = sharedPreferences.getString(Constantes.LATITUD, "0");
                     final String longitud = sharedPreferences.getString(Constantes.LONGITUD, "0");
@@ -210,6 +246,7 @@ public class SeekMedicalAttentionFragment extends Fragment {
                     seekMedicalAttentionModel.setLatitud(Double.parseDouble(latitud));
                     seekMedicalAttentionModel.setLongitud(Double.parseDouble(longitud));
                     seekMedicalAttentionModel.setFechaAtencion(fechaAtencion);
+                    seekMedicalAttentionModel.setHoraAtencion(horaAtencion);
 
                     ISeekMedicalAttentionService seekMedicalAttentionService = ServiceGenerator.createService(ISeekMedicalAttentionService.class);
                     seekMedicalAttentionService.crearSolicitud(seekMedicalAttentionModel, new Callback<JsonResponse>() {
@@ -238,9 +275,14 @@ public class SeekMedicalAttentionFragment extends Fragment {
 
                                 ((MainActivity) getActivity()).specialistItemModelListJson = specialistItemModelListJson;
 
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                editor.putString(Constantes.TIENEPOINT, Constantes.SITIENEPOINT);
+                                editor.commit();
+
                                 Fragment fragment = new MapFragment();
                                 getActivity().getSupportFragmentManager().beginTransaction()
                                         .replace(R.id.linearLayoutMain, fragment)
+                                        .addToBackStack(null)
                                         .commit();
                                 toolbar.setTitle(R.string.title_activity_main);
 
@@ -313,6 +355,7 @@ public class SeekMedicalAttentionFragment extends Fragment {
         String fechaAtencion = txtFechaAtencion.getText().toString();
         if(direccion.equals("") || sintomas.equals("")
                 || fechaAtencion.equals("")
+                || spHoraServicio.getSelectedItemPosition()==0
                 || spTipoServicio.getSelectedItemPosition()==0
                 || spEspecialidad.getSelectedItemPosition()==0
                 || spServicio.getSelectedItemPosition()==0){
@@ -358,6 +401,6 @@ public class SeekMedicalAttentionFragment extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        public void onFragmentInteraction(Object object);
     }
 }

@@ -22,6 +22,10 @@ public class Constantes {
     public static final String LATITUD = "LATITUD";
     public static final String LONGITUD = "LONGITUD";
     public static final String DIRECCION = "DIRECCION";
+    public static final String TIENEPOINT = "TIENEPOINT";
+    public static final String SITIENEPOINT = "1";
+    public static final String NOTIENEPOINT = "0";
+    public static final String ENESTEMOMENTO = "1";
 
     public static final String ERROR_NO_CONTROLADO = "Conexión no establecida, sin acceso a internet";
     public static final String INGRESE_USERNAME_CLAVE = "Ingrese usuario y clave";
@@ -37,6 +41,7 @@ public class Constantes {
     public static final String DESEA_ACTIVAR_GPS = "El sistema GPS esta desactivado, ¿Desea activarlo?";
     public static final String SI = "Sí";
     public static final String NO = "No";
+    public static final String MENSAJEENESTEMOMENTO = "Sujeta a disponibilidad del médico, para una emergencia comunicarse al 333-3333";
 
     public static final String ADDRESS_COMPLETE = "addressComplete";
 

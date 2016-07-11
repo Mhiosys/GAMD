@@ -20,7 +20,7 @@ public class ComunUtil {
         String pattern = "###,###";
         for (int i = 0; i < cantidadDecimales; i++) {
             if (i == 0)
-                pattern += ".";
+                pattern += "build/intermediates/exploded-aar/com.google.android.gms/play-services-nearby/8.4.0/res";
             pattern += "#";
         }
 

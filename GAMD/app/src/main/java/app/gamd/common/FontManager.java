@@ -23,52 +23,52 @@ public class FontManager {
 
     public Typeface getRobotoBold(Context context) {
         if (robotoLight == null)
-            robotoLight = Typeface.createFromAsset(context.getAssets(),"fonts/Roboto-Bold.ttf");
+            robotoLight = Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Bold.ttf");
 
         return robotoLight;
     }
 
     public Typeface getRobotoLight(Context context) {
         if (robotoLight == null)
-            robotoLight = Typeface.createFromAsset(context.getAssets(),"fonts/Roboto-Light.ttf");
+            robotoLight = Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Light.ttf");
 
         return robotoLight;
     }
 
     public Typeface getRobotoThin(Context context) {
         if (robotoThin == null)
-            robotoThin = Typeface.createFromAsset(context.getAssets(),"fonts/Roboto-Thin.ttf");
+            robotoThin = Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Thin.ttf");
 
         return robotoLight;
     }
 
     public Typeface getRobotoRegular(Context context) {
         if (robotoRegular == null)
-            robotoRegular = Typeface.createFromAsset(context.getAssets(),"fonts/Roboto-Regular.ttf");
+            robotoRegular = Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Regular.ttf");
         return robotoRegular;
     }
 
     public Typeface getMuseoSans100(Context context){
         if(museoSans100==null)
-            museoSans100=Typeface.createFromAsset(context.getAssets(),"fonts/MuseoSans_100.otf");
+            museoSans100=Typeface.createFromAsset(context.getAssets(), "fonts/MuseoSans_100.otf");
         return museoSans100;
     }
 
     public Typeface getMuseoSans300(Context context){
         if(museoSans300==null)
-            museoSans300=Typeface.createFromAsset(context.getAssets(),"fonts/MuseoSans_300.otf");
+            museoSans300=Typeface.createFromAsset(context.getAssets(), "fonts/MuseoSans_300.otf");
         return  museoSans300;
     }
 
     public Typeface getMuseoSans500(Context context){
         if(museoSans500==null)
-            museoSans500=Typeface.createFromAsset(context.getAssets(),"fonts/MuseoSans_500.otf");
+            museoSans500=Typeface.createFromAsset(context.getAssets(), "fonts/MuseoSans_500.otf");
         return museoSans500;
     }
 
     public Typeface getMuseoSans700(Context context){
         if(museoSans700==null)
-            museoSans700=Typeface.createFromAsset(context.getAssets(),"fonts/MuseoSans_700.otf");
+            museoSans700=Typeface.createFromAsset(context.getAssets(), "fonts/MuseoSans_700.otf");
         return museoSans700;
     }
 }

@@ -37,6 +37,7 @@ import app.gamd.adapter.SpinnerAdapter;
 import app.gamd.common.Constantes;
 import app.gamd.common.JsonResponse;
 import app.gamd.contract.ISeekMedicalAttentionService;
+import app.gamd.dialogfragment.CustomDatePickerFragmentDialog;
 import app.gamd.model.SeekMedicalAttentionModel;
 import app.gamd.model.SpecialistModel;
 import app.gamd.model.SpinnerModel;
@@ -51,7 +52,7 @@ import retrofit.client.Response;
  * {@link SeekMedicalAttentionFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
  */
-public class SeekMedicalAttentionFragment extends Fragment {
+public class SeekMedicalAttentionFragment extends Fragment implements CustomDatePickerFragmentDialog.OnDateSelectedListener {
 
     private OnFragmentInteractionListener mListener;
     Spinner spHoraServicio, spTipoServicio, spEspecialidad, spServicio;
@@ -64,6 +65,9 @@ public class SeekMedicalAttentionFragment extends Fragment {
     private static final String TAG = "SeekMedicalAttention";
     private View viewSeekMedicalFragment;
     private Toolbar toolbar;
+    private int year;
+    private int month;
+    private int day;
 
     public SeekMedicalAttentionFragment() {
         // Required empty public constructor
@@ -76,7 +80,9 @@ public class SeekMedicalAttentionFragment extends Fragment {
         // Inflate the layout for this fragment
         viewSeekMedicalFragment = inflater.inflate(R.layout.fragment_seek_medical_attention, container, false);
         sharedPreferences = getActivity().getApplicationContext().getSharedPreferences(Constantes.PREFERENCES, Context.MODE_PRIVATE);
-        dateFormatter = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
+        dateFormatter = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+
+
 
         toolbar = (Toolbar)getActivity().findViewById(R.id.toolbar);
         txtDireccionS = (EditText)viewSeekMedicalFragment.findViewById(R.id.txtDireccionS);
@@ -311,29 +317,19 @@ public class SeekMedicalAttentionFragment extends Fragment {
         });
 
         Calendar newCalendar = Calendar.getInstance();
-
-        fechaPickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
-
-            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                try {
-                    Calendar newDate = Calendar.getInstance();
-                    newDate.set(year, monthOfYear, dayOfMonth);
-                    txtFechaAtencion.setText(dateFormatter.format(newDate.getTime()));
-                } catch (Exception ex) {
-                    Log.d(TAG, ex.getMessage());
-                }
-            }
-        },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
-
+        year = newCalendar.get(Calendar.YEAR);
+        month = newCalendar.get(Calendar.MONTH);
+        day = newCalendar.get(Calendar.DAY_OF_MONTH);
+        onDateSelected(year, month+1, day);
 
         txtFechaAtencion.setOnClickListener(new View.OnClickListener() {
+
             @Override
-            public void onClick(View v) {
-                try {
-                    fechaPickerDialog.show();
-                } catch (Exception ex) {
-                    Log.d(TAG, ex.getMessage());
-                }
+            public void onClick(View arg0) {
+                CustomDatePickerFragmentDialog dialog = new CustomDatePickerFragmentDialog();
+                dialog.setHandler(SeekMedicalAttentionFragment.this);
+                dialog.setDate(year, month-1, day);
+                dialog.show(getActivity().getFragmentManager(), "dialog");
             }
         });
 
@@ -387,6 +383,20 @@ public class SeekMedicalAttentionFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onDateSelected(int yearSelected, int monthSelected, int daySelected) {
+        year = yearSelected;
+        month = monthSelected;
+        day = daySelected;
+        String fecha = String.format(Locale.getDefault(), "%02d/%02d/%04d", day, month, year);
+        txtFechaAtencion.setText(fecha);
+    }
+
+    @Override
+    public void onCancel() {
+
     }
 
     /**

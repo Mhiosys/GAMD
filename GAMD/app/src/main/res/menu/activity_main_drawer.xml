@@ -10,6 +10,12 @@
             android:id="@+id/nav_seek"
             android:icon="@drawable/ic_keyboard"
             android:title="@string/title_activity_seek_medical_attention" />
+
+        <item
+            android:id="@+id/nav_appointment"
+            android:icon="@drawable/ic_keyboard"
+            android:title="@string/title_activity_appointment_attention" />
+
         <item
             android:id="@+id/nav_notification"
             android:icon="@drawable/ic_sms"

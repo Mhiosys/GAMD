@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical" >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/AzulPandero"
+        android:gravity="center_horizontal"
+        android:padding="5dp"
+        android:text="FECHA"
+        android:textColor="@android:color/white" />
+
+    <DatePicker
+        android:id="@+id/date_picker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:calendarViewShown="false" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/gamdBackgroundColor" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/tvCancelar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:padding="10dp"
+            android:text="Cancelar"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/AzulPandero"
+            android:textStyle="bold" />
+
+        <View
+            android:id="@+id/vSeparacionOpciones"
+            android:layout_width="0.5dp"
+            android:layout_height="match_parent"
+            android:background="@color/gamdBackgroundColor" />
+
+        <TextView
+            android:id="@+id/tvAceptar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:padding="10dp"
+            android:text="Aceptar"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/AzulPandero"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+</LinearLayout>

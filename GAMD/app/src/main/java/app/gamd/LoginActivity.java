@@ -12,12 +12,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.gson.internal.LinkedTreeMap;
+
 import java.util.Map;
 
 import app.gamd.common.Constantes;
 import app.gamd.common.JsonResponse;
 import app.gamd.contract.IClienteService;
+import app.gamd.contract.IUsuarioService;
 import app.gamd.model.LoginModel;
+import app.gamd.model.PersonaModel;
 import app.gamd.service.ServiceGenerator;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -90,8 +94,8 @@ public class LoginActivity extends AppCompatActivity {
                         loginModel.setUsername(username);
                         loginModel.setPassword(clave);
 
-                        IClienteService clienteService = ServiceGenerator.createService(IClienteService.class);
-                        clienteService.getGetUserCliente(loginModel, new Callback<JsonResponse>() {
+                        IUsuarioService usuarioService = ServiceGenerator.createService(IUsuarioService.class);
+                        usuarioService.getUsuario(loginModel, new Callback<JsonResponse>() {
                             @Override
                             public void success(JsonResponse jsonResponse, Response response) {
                                 progress.dismiss();
@@ -102,9 +106,17 @@ public class LoginActivity extends AppCompatActivity {
                                         SharedPreferences.Editor editor = sharedPreferences.edit();
                                         editor.putInt(Constantes.SETTING_USUARIOID, (int)Double.parseDouble(mapper.get("Id").toString()));
                                         editor.putString(Constantes.SETTING_USERNAME, mapper.get("Username").toString());
+                                        editor.putInt(Constantes.SETTING_TIPOUSUARIO, (int)Double.parseDouble(mapper.get("TipoUsuario").toString()));
+
+                                        LinkedTreeMap persona = ((LinkedTreeMap) mapper.get("Persona"));
+                                        editor.putString(Constantes.SETTING_NOMBRE, persona.get("Nombre").toString());
+                                        editor.putString(Constantes.SETTING_APELLIDO, persona.get("Apellido").toString());
+                                        editor.putString(Constantes.SETTING_CELULAR, Constantes.NUMERO_DEFAULT);
+                                        /*
                                         editor.putString(Constantes.SETTING_NOMBRE, mapper.get("Nombre").toString());
                                         editor.putString(Constantes.SETTING_APELLIDO, mapper.get("Apellido").toString());
                                         editor.putString(Constantes.SETTING_CELULAR, mapper.get("Celular").toString());
+                                        */
                                         editor.putString(Constantes.SETTING_CONTINUAR, "1");
                                         editor.commit();
 

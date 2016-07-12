@@ -14,6 +14,7 @@ public class Constantes {
     public static final String SETTING_ACTIVO = "1.0";
     public static final String SETTING_USUARIOID = "USUARIOID";
     public static final String SETTING_USERNAME = "USERNAME";
+    public static final String SETTING_TIPOUSUARIO = "TIPOUSUARIO";
     public static final String SETTING_APELLIDO = "APELLIDO";
     public static final String SETTING_NOMBRE = "NOMBRE";
     public static final String SETTING_CELULAR = "CELULAR";
@@ -26,6 +27,10 @@ public class Constantes {
     public static final String SITIENEPOINT = "1";
     public static final String NOTIENEPOINT = "0";
     public static final String ENESTEMOMENTO = "1";
+    public static final String TIPOUSUARIO_CLIENTE = "TIPOUSUARIO_CLIENTE";
+    public static final Integer TIPOUSUARIO_CLIENTE_VALOR = 1;
+    public static final String TIPOUSUARIO_ESPECIALISTA = "TIPOUSUARIO_ESPECIALISTA";
+    public static final Integer TIPOUSUARIO_ESPECIALISTA_VALOR = 2;
 
     public static final String ERROR_NO_CONTROLADO = "Conexión no establecida, sin acceso a internet";
     public static final String INGRESE_USERNAME_CLAVE = "Ingrese usuario y clave";
@@ -42,6 +47,7 @@ public class Constantes {
     public static final String SI = "Sí";
     public static final String NO = "No";
     public static final String MENSAJEENESTEMOMENTO = "Sujeta a disponibilidad del médico, para una emergencia comunicarse al 333-3333";
+    public static final String NUMERO_DEFAULT = "923232345";
 
     public static final String ADDRESS_COMPLETE = "addressComplete";
 

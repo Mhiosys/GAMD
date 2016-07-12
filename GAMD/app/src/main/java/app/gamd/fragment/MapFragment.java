@@ -93,6 +93,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
         txtDireccion = (TextView)viewMapFragment.findViewById(R.id.txtDireccion);
         pbBusqueda = (ProgressBar) viewMapFragment.findViewById(R.id.pbBusqueda);
         toolbar = (Toolbar)getActivity().findViewById(R.id.toolbar);
+        ubicado = false;
 
         locationManager = (LocationManager) getActivity().getSystemService(getActivity().LOCATION_SERVICE);
         /****Mejora****/

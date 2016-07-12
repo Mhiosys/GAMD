@@ -36,6 +36,7 @@ import java.util.List;
 import java.util.Locale;
 
 import app.gamd.common.Constantes;
+import app.gamd.fragment.AppointmentAttentionFragment;
 import app.gamd.fragment.MapFragment;
 import app.gamd.fragment.NotificationFragment;
 import app.gamd.fragment.SeekMedicalAttentionFragment;
@@ -145,11 +146,32 @@ public class MainActivity extends AppCompatActivity
         ((TextView)navigationView.getHeaderView(0).findViewById(R.id.txtTelefonoMenu)).setText(telefono);
         navigationView.getMenu().getItem(0).setChecked(true);
 
+        Integer tipoUsuario = sharedPreferences.getInt(Constantes.SETTING_TIPOUSUARIO, 1);
+        boolean estado = true;
+        if(tipoUsuario == Constantes.TIPOUSUARIO_CLIENTE_VALOR)
+        {
+            navigationView.getMenu().getItem(0).setVisible(estado);
+            navigationView.getMenu().getItem(1).setVisible(estado);
+            navigationView.getMenu().getItem(2).setVisible(!estado);
+            navigationView.getMenu().getItem(3).setVisible(estado);
+        }else{
+            navigationView.getMenu().getItem(0).setVisible(!estado);
+            navigationView.getMenu().getItem(1).setVisible(!estado);
+            navigationView.getMenu().getItem(2).setVisible(estado);
+            navigationView.getMenu().getItem(3).setVisible(estado);
+        }
+
         Fragment fragment = null;
         if(VerificarNotificacion()>0){
             fragment = new NotificationFragment();
         }else{
-            fragment = new MapFragment();
+            if(tipoUsuario == Constantes.TIPOUSUARIO_CLIENTE_VALOR)
+            {
+                fragment = new AppointmentAttentionFragment();
+            }
+            else{
+                fragment = new MapFragment();
+            }
         }
 
         getSupportFragmentManager().beginTransaction()
@@ -295,28 +317,6 @@ public class MainActivity extends AppCompatActivity
         } else {
             super.onBackPressed();
         }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")

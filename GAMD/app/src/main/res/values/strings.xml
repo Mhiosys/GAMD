@@ -6,6 +6,7 @@
     <string name="title_activity_recover_password">Recuperar contraseña</string>
     <string name="title_activity_main">GAMD</string>
     <string name="title_activity_seek_medical_attention">Solicitar Atención Médica</string>
+    <string name="title_activity_appointment_attention">Atender Citas</string>
     <string name="title_fragment_notification">Notificaciones</string>
     <string name="title_fragment_compartir">Compartir</string>
     <string name="title_fragment_contacto">Contacto</string>

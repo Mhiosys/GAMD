@@ -4,6 +4,7 @@ import app.gamd.common.JsonResponse;
 import app.gamd.model.SeekMedicalAttentionModel;
 import retrofit.Callback;
 import retrofit.http.Body;
+import retrofit.http.Field;
 import retrofit.http.POST;
 
 /**
@@ -12,4 +13,7 @@ import retrofit.http.POST;
 public interface ISeekMedicalAttentionService {
     @POST("/api/SolicitudAtencion/CrearSolicitud")
     void crearSolicitud(@Body SeekMedicalAttentionModel seekMedicalAttentionModel, Callback<JsonResponse> cb);
+
+    @POST("/api/SolicitudAtencion/CancelarCita")
+    void cancelarCita(@Body SeekMedicalAttentionModel seekMedicalAttentionModel, Callback<JsonResponse> cb);
 }

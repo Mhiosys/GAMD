@@ -47,7 +47,8 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         MapFragment.OnFragmentInteractionListener,
         NotificationFragment.OnFragmentInteractionListener,
-        SeekMedicalAttentionFragment.OnFragmentInteractionListener{
+        SeekMedicalAttentionFragment.OnFragmentInteractionListener,
+        AppointmentAttentionFragment.OnFragmentInteractionListener{
 
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     private Toolbar toolbar;
@@ -144,7 +145,6 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         ((TextView)navigationView.getHeaderView(0).findViewById(R.id.txtUsuarioMenu)).setText(username);
         ((TextView)navigationView.getHeaderView(0).findViewById(R.id.txtTelefonoMenu)).setText(telefono);
-        navigationView.getMenu().getItem(0).setChecked(true);
 
         Integer tipoUsuario = sharedPreferences.getInt(Constantes.SETTING_TIPOUSUARIO, 1);
         boolean estado = true;
@@ -154,11 +154,13 @@ public class MainActivity extends AppCompatActivity
             navigationView.getMenu().getItem(1).setVisible(estado);
             navigationView.getMenu().getItem(2).setVisible(!estado);
             navigationView.getMenu().getItem(3).setVisible(estado);
+            navigationView.getMenu().getItem(0).setChecked(true);
         }else{
             navigationView.getMenu().getItem(0).setVisible(!estado);
             navigationView.getMenu().getItem(1).setVisible(!estado);
             navigationView.getMenu().getItem(2).setVisible(estado);
             navigationView.getMenu().getItem(3).setVisible(estado);
+            navigationView.getMenu().getItem(2).setChecked(true);
         }
 
         Fragment fragment = null;
@@ -167,10 +169,11 @@ public class MainActivity extends AppCompatActivity
         }else{
             if(tipoUsuario == Constantes.TIPOUSUARIO_CLIENTE_VALOR)
             {
-                fragment = new AppointmentAttentionFragment();
-            }
-            else{
                 fragment = new MapFragment();
+            }
+            else
+            {
+                fragment = new AppointmentAttentionFragment();
             }
         }
 
@@ -333,6 +336,9 @@ public class MainActivity extends AppCompatActivity
             fragmentTransaction = true;
         } else if (id == R.id.nav_seek) {
             fragment = new SeekMedicalAttentionFragment();
+            fragmentTransaction = true;
+        } else if (id == R.id.nav_appointment) {
+            fragment = new AppointmentAttentionFragment();
             fragmentTransaction = true;
         } else if (id == R.id.nav_notification) {
             fragment = new NotificationFragment();

@@ -42,7 +42,7 @@
         <item>En este momento</item>
         <item>6:00 am - 8:00 am</item>
         <item>8:00 am - 10:00 am</item>
-        <item>10:00 am - 12:00 am</item>
+        <item>10:00 am - 12:00 pm</item>
         <item>12:00 pm - 2:00 pm</item>
         <item>2:00 pm - 4:00 pm</item>
         <item>4:00 pm - 6:00 pm</item>
@@ -56,7 +56,7 @@
     <string name="Horario_1">En este momento</string>
     <string name="Horario_2">6:00 am - 8:00 am</string>
     <string name="Horario_3">8:00 am - 10:00 am</string>
-    <string name="Horario_4">10:00 am - 12:00 am</string>
+    <string name="Horario_4">10:00 am - 12:00 pm</string>
     <string name="Horario_5">12:00 pm - 2:00 pm</string>
     <string name="Horario_6">2:00 pm - 4:00 pm</string>
     <string name="Horario_7">4:00 pm - 6:00 pm</string>
@@ -144,6 +144,11 @@
     <string name="Pedir_Aqui">Pedir aquí</string>
     <string name="title_activity_maps">Map</string>
     <string name="Vacio">Vacio</string>
+    <string name="Cancelar_Cita">Cancelar Cita</string>
+    <string name="Cerrar">Cerrar</string>
+    <string name="Solicitud_Pendiente">Solicitud Pendiente</string>
+    <string name="Confirmación">Confirmación</string>
+    <string name="Esta_seguro_confirmacion">¿Está seguro de cancelar la cita?</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

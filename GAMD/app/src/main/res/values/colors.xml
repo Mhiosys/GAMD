@@ -34,5 +34,6 @@
     <color name="gamdBackgroundColor">@color/md_grey_600</color>
     <color name="gamdPrimaryTextColor">@color/md_white_1000</color>
     <color name="gamdSecondaryTextColor">@color/md_yellow_500</color>
+    <color name="gamdColorAvisoInternet">#415262</color>
 
 </resources>

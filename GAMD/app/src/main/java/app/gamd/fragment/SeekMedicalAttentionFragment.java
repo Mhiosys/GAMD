@@ -3,12 +3,14 @@ package app.gamd.fragment;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.util.Log;
@@ -17,10 +19,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.google.gson.internal.LinkedTreeMap;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -38,6 +41,7 @@ import app.gamd.common.Constantes;
 import app.gamd.common.JsonResponse;
 import app.gamd.contract.ISeekMedicalAttentionService;
 import app.gamd.dialogfragment.CustomDatePickerFragmentDialog;
+import app.gamd.model.CitaAtencionModel;
 import app.gamd.model.SeekMedicalAttentionModel;
 import app.gamd.model.SpecialistModel;
 import app.gamd.model.SpinnerModel;
@@ -296,8 +300,22 @@ public class SeekMedicalAttentionFragment extends Fragment implements CustomDate
                                 navigationView.getMenu().getItem(0).setChecked(true);
 
                             } else {
-                                Snackbar.make(viewSeekMedicalFragment, jsonResponse.getMessage(), Snackbar.LENGTH_LONG)
-                                        .setAction("Action", null).show();
+
+                                if(jsonResponse.getData()!= null)
+                                {
+                                    LinkedTreeMap citaAtencionModel = (LinkedTreeMap) jsonResponse.getData();
+                                    String mensajePendiente = jsonResponse.getMessage();
+                                    Integer numeroSolicitud = Integer.parseInt(citaAtencionModel.get("NumSolicitud").toString());
+                                    mensajePendiente += ("\r\nSolicitud Nro: " + numeroSolicitud);
+                                    mensajePendiente += ("\r\nPendiente de atención");
+                                    mensajePendiente += ("\r\nProgramada para " + citaAtencionModel.get("FechaCita").toString().substring(0,10));
+                                    mensajePendiente += ("\r\nRango: " + citaAtencionModel.get("HoraCita").toString());
+
+                                    showDialog(mensajePendiente, numeroSolicitud);
+                                }else{
+                                    Snackbar.make(viewSeekMedicalFragment, jsonResponse.getMessage(), Snackbar.LENGTH_LONG)
+                                            .setAction("Action", null).show();
+                                }
                             }
                         }
 
@@ -336,11 +354,92 @@ public class SeekMedicalAttentionFragment extends Fragment implements CustomDate
         return viewSeekMedicalFragment;
     }
 
+    private void showDialog(String mensaje, int numeroSolicitud){
+        final int solicitudId = numeroSolicitud;
+        new AlertDialog.Builder(getActivity())
+                .setTitle(R.string.Solicitud_Pendiente)
+                .setMessage(mensaje)
+                .setPositiveButton(R.string.Cerrar, new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                })
+                .setNegativeButton(R.string.Cancelar_Cita, new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        showDialogEleccion(solicitudId);
+                    }
+                }).show();
+
+    }
+
+    private void showDialogEleccion(int numeroSolicitud){
+        final int solicitudId = numeroSolicitud;
+        new AlertDialog.Builder(getActivity())
+                .setTitle(R.string.Confirmación)
+                .setMessage(R.string.Esta_seguro_confirmacion)
+                .setPositiveButton(android.R.string.no, new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                })
+                .setNegativeButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        cancelarCita(solicitudId);
+                    }
+                }).show();
+
+    }
+
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
         }
+    }
+
+    private void cancelarCita(int numeroSolicitud){
+        progress = new ProgressDialog(getActivity());
+        progress.setMessage(Constantes.ENVIANDO_SOLICITUD);
+        progress.show();
+
+        SeekMedicalAttentionModel seekMedicalAttentionModel = new SeekMedicalAttentionModel();
+        seekMedicalAttentionModel.setSolicitudId(numeroSolicitud);
+        ISeekMedicalAttentionService seekMedicalAttentionService = ServiceGenerator.createService(ISeekMedicalAttentionService.class);
+        seekMedicalAttentionService.cancelarCita(seekMedicalAttentionModel, new Callback<JsonResponse>() {
+            @Override
+            public void success(JsonResponse jsonResponse, Response response) {
+                progress.dismiss();
+                if (jsonResponse.isSuccess()) {
+                    Fragment fragment = new MapFragment();
+                    getActivity().getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.linearLayoutMain, fragment)
+                            .addToBackStack(null)
+                            .commit();
+                    toolbar.setTitle(R.string.title_activity_main);
+
+                    NavigationView navigationView = (NavigationView) getActivity().findViewById(R.id.nav_view);
+                    navigationView.getMenu().getItem(0).setChecked(true);
+                }else{
+                    Snackbar.make(viewSeekMedicalFragment, jsonResponse.getMessage(), Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                progress.dismiss();
+                Snackbar.make(viewSeekMedicalFragment, Constantes.ERROR_NO_CONTROLADO, Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
+
     }
 
     private boolean validarEnvio(){

@@ -13,6 +13,8 @@ public class SeekMedicalAttentionModel {
     private String ClienteUserName;
     private String FechaAtencion;
     private String HoraAtencion;
+    private int SolicitudId;
+    private String Observacion;
 
     public String getServicioId() {
         return ServicioId;
@@ -84,5 +86,21 @@ public class SeekMedicalAttentionModel {
 
     public void setHoraAtencion(String horaAtencion) {
         HoraAtencion = horaAtencion;
+    }
+
+    public int getSolicitudId() {
+        return SolicitudId;
+    }
+
+    public void setSolicitudId(int solicitudId) {
+        SolicitudId = solicitudId;
+    }
+
+    public String getObservacion() {
+        return Observacion;
+    }
+
+    public void setObservacion(String observacion) {
+        Observacion = observacion;
     }
 }

@@ -146,9 +146,17 @@
     <string name="Vacio">Vacio</string>
     <string name="Cancelar_Cita">Cancelar Cita</string>
     <string name="Cerrar">Cerrar</string>
+    <string name="Cancelar">Cancelar</string>
+    <string name="Aceptar">Aceptar</string>
     <string name="Solicitud_Pendiente">Solicitud Pendiente</string>
+    <string name="Confirmar_Llegada">Confirmar Llegada</string>
+    <string name="Finalizar_Servicio">Finalizar Servicio</string>
+    <string name="Esta_seguro_llegada">¿Está seguro que desea confirmar su llegada?</string>
+    <string name="Esta_seguro_finalizar">¿Está seguro que desea Finalizar el servicio?</string>
     <string name="Confirmación">Confirmación</string>
     <string name="Esta_seguro_confirmacion">¿Está seguro de cancelar la cita?</string>
+    <string name="Solicitudes_Pendientes">Solicitudes Pendientes</string>
+    <string name="Solicitudes_En_Curso">Solicitudes En Curso</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

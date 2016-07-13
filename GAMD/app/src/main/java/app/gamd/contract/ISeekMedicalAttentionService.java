@@ -16,4 +16,16 @@ public interface ISeekMedicalAttentionService {
 
     @POST("/api/SolicitudAtencion/CancelarCita")
     void cancelarCita(@Body SeekMedicalAttentionModel seekMedicalAttentionModel, Callback<JsonResponse> cb);
+
+    @POST("/api/SolicitudAtencion/ConfirmarLlegadaCita")
+    void confirmarLlegadaCita(@Body SeekMedicalAttentionModel seekMedicalAttentionModel, Callback<JsonResponse> cb);
+
+    @POST("/api/SolicitudAtencion/FinalizarCita")
+    void finalizarCita(@Body SeekMedicalAttentionModel seekMedicalAttentionModel, Callback<JsonResponse> cb);
+
+    @POST("/api/SolicitudAtencion/GetSolicitudesPendientes")
+    void getSolicitudesPendientes(@Body SeekMedicalAttentionModel seekMedicalAttentionModel, Callback<JsonResponse> cb);
+
+    @POST("/api/SolicitudAtencion/GetSolicitudesActivas")
+    void getSolicitudesActivas(@Body SeekMedicalAttentionModel seekMedicalAttentionModel, Callback<JsonResponse> cb);
 }

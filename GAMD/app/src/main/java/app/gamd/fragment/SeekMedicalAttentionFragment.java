@@ -86,8 +86,6 @@ public class SeekMedicalAttentionFragment extends Fragment implements CustomDate
         sharedPreferences = getActivity().getApplicationContext().getSharedPreferences(Constantes.PREFERENCES, Context.MODE_PRIVATE);
         dateFormatter = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
 
-
-
         toolbar = (Toolbar)getActivity().findViewById(R.id.toolbar);
         txtDireccionS = (EditText)viewSeekMedicalFragment.findViewById(R.id.txtDireccionS);
         txtFechaAtencion = (EditText) viewSeekMedicalFragment.findViewById(R.id.txtFechaAtencion);
@@ -305,13 +303,14 @@ public class SeekMedicalAttentionFragment extends Fragment implements CustomDate
                                 {
                                     LinkedTreeMap citaAtencionModel = (LinkedTreeMap) jsonResponse.getData();
                                     String mensajePendiente = jsonResponse.getMessage();
+                                    Integer solicitudId = (int) Double.parseDouble(citaAtencionModel.get("Id").toString());
                                     Integer numeroSolicitud = Integer.parseInt(citaAtencionModel.get("NumSolicitud").toString());
                                     mensajePendiente += ("\r\nSolicitud Nro: " + numeroSolicitud);
                                     mensajePendiente += ("\r\nPendiente de atención");
                                     mensajePendiente += ("\r\nProgramada para " + citaAtencionModel.get("FechaCita").toString().substring(0,10));
                                     mensajePendiente += ("\r\nRango: " + citaAtencionModel.get("HoraCita").toString());
 
-                                    showDialog(mensajePendiente, numeroSolicitud);
+                                    showDialog(mensajePendiente, solicitudId);
                                 }else{
                                     Snackbar.make(viewSeekMedicalFragment, jsonResponse.getMessage(), Snackbar.LENGTH_LONG)
                                             .setAction("Action", null).show();
@@ -359,17 +358,18 @@ public class SeekMedicalAttentionFragment extends Fragment implements CustomDate
         new AlertDialog.Builder(getActivity())
                 .setTitle(R.string.Solicitud_Pendiente)
                 .setMessage(mensaje)
-                .setPositiveButton(R.string.Cerrar, new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                    }
-                })
-                .setNegativeButton(R.string.Cancelar_Cita, new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.Cancelar_Cita, new DialogInterface.OnClickListener() {
 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         showDialogEleccion(solicitudId);
+                    }
+                })
+                .setNegativeButton(R.string.Cerrar, new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
                     }
                 }).show();
 
@@ -380,18 +380,18 @@ public class SeekMedicalAttentionFragment extends Fragment implements CustomDate
         new AlertDialog.Builder(getActivity())
                 .setTitle(R.string.Confirmación)
                 .setMessage(R.string.Esta_seguro_confirmacion)
-                .setPositiveButton(android.R.string.no, new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                })
-                .setNegativeButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         cancelarCita(solicitudId);
+                    }
+                })
+                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
                     }
                 }).show();
 

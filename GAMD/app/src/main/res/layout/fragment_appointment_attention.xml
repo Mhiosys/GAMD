@@ -7,47 +7,159 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/scrollView"
-        android:layout_gravity="center_horizontal"
-        android:layout_margin="5sp"
-        android:paddingTop="10dp">
+        android:layout_gravity="center_horizontal">
 
         <LinearLayout
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:orientation="vertical">
 
-
-            <TextView
-                android:id="@+id/lblPendientes"
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="fill_parent"
-                android:layout_height="match_parent"
-                android:minHeight="?android:attr/listPreferredItemHeightSmall"
-                android:textAppearance="?android:attr/textAppearanceListItemSmall"
-                android:gravity="center_vertical"
-                android:text="@string/Solicitudes_Pendientes"
-                android:textAlignment="center"
-                android:textStyle="bold" />
+                android:layout_height="wrap_content">
 
-            <ListView
-                android:layout_width="wrap_content"
-                android:layout_height="200dp"
-                android:id="@+id/lvAtencionPendiente" />
+                <TextView
+                    android:id="@+id/lblPendientes"
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:minHeight="?android:attr/listPreferredItemHeightSmall"
+                    android:gravity="center_vertical"
+                    android:text="@string/Solicitudes_Pendientes"
+                    android:textStyle="bold"
+                    android:textAppearance="?android:attr/textAppearanceListItemSmall" />
 
-            <TextView
-                android:id="@+id/lblEnCurso"
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="fill_parent"
-                android:layout_height="match_parent"
-                android:minHeight="?android:attr/listPreferredItemHeightSmall"
-                android:textAppearance="?android:attr/textAppearanceListItemSmall"
-                android:gravity="center_vertical"
-                android:text="@string/Solicitudes_En_Curso"
-                android:textAlignment="center"
-                android:textStyle="bold" />
+                android:layout_height="20dp"
+                android:gravity="fill_horizontal|center"
+                android:layout_gravity="center"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:background="@color/AzulPandero">
 
-            <ListView
-                android:layout_width="wrap_content"
-                android:layout_height="200dp"
-                android:id="@+id/lvAtencionEnCurso" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tvDireccionTitulo1"
+                    android:layout_weight=".5"
+                    android:textSize="16sp"
+                    android:textColor="@color/Blanco"
+                    android:layout_gravity="center"
+                    android:text="@string/direccion"
+                    android:gravity="center"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:id="@+id/tvFechaTitulo1"
+                    android:layout_weight=".5"
+                    android:textSize="16sp"
+                    android:textColor="@color/Blanco"
+                    android:layout_gravity="center"
+                    android:text="@string/fecha"
+                    android:gravity="center"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="150dp"
+                android:padding="5dp"
+                android:layout_weight="0.57">
+
+                <ListView
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:id="@+id/lvAtencionPendiente"
+                    android:headerDividersEnabled="true">
+
+                </ListView>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/lblEnCurso"
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:minHeight="?android:attr/listPreferredItemHeightSmall"
+                    android:textAppearance="?android:attr/textAppearanceListItemSmall"
+                    android:gravity="center_vertical"
+                    android:text="@string/Solicitudes_En_Curso"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="20dp"
+                android:gravity="fill_horizontal|center"
+                android:layout_gravity="center"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:background="@color/AzulPandero">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tvDireccionTitulo2"
+                    android:layout_weight=".5"
+                    android:textSize="16sp"
+                    android:textColor="@color/Blanco"
+                    android:layout_gravity="center"
+                    android:text="@string/direccion"
+                    android:gravity="center"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:id="@+id/tvFechaTitulo2"
+                    android:layout_weight=".5"
+                    android:textSize="16sp"
+                    android:textColor="@color/Blanco"
+                    android:layout_gravity="center"
+                    android:text="@string/fecha"
+                    android:gravity="center"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="150dp"
+                android:padding="5dp"
+                android:layout_weight="0.57">
+
+                <ListView
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:id="@+id/lvAtencionEnCurso">
+
+                </ListView>
+
+
+            </LinearLayout>
 
         </LinearLayout>
     </ScrollView>

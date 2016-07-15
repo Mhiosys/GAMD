@@ -9,6 +9,5 @@ public class AtencionHolder {
     public TextView solicitudId;
     public TextView clienteId;
     public TextView direccion;
-    public TextView fechaAtencion;
-    public TextView horaAtencion;
+    public TextView fechaHoraAtencion;
 }

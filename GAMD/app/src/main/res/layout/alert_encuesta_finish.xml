@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/AzulPandero"
+            android:gravity="center_horizontal"
+            android:padding="10dp"
+            android:text="@string/Encuesta_Servicio_Capital"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:padding="10dp"
+            android:text="@string/Mensaje_Subtitulo_Encuensta"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="1dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtPregunta1Id"
+            android:visibility="invisible"/>
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:padding="5dp"
+            android:id="@+id/txtPregunta1"
+            android:layout_weight="1"
+            android:textStyle="bold" />
+
+        <Spinner
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/spPregunta1"
+            android:padding="5dp"
+            android:layout_weight="3"
+            android:background="@drawable/spinner_selector"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="1dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtPregunta2Id"
+            android:visibility="invisible"/>
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:padding="5dp"
+            android:id="@+id/txtPregunta2"
+            android:layout_weight="1"
+            android:textStyle="bold" />
+
+        <Spinner
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/spPregunta2"
+            android:padding="5dp"
+            android:layout_weight="3"
+            android:background="@drawable/spinner_selector"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="1dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtPregunta3Id"
+            android:visibility="invisible"/>
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:padding="5dp"
+            android:id="@+id/txtPregunta3"
+            android:layout_weight="1"
+            android:textStyle="bold" />
+
+        <Spinner
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/spPregunta3"
+            android:padding="5dp"
+            android:layout_weight="3"
+            android:background="@drawable/spinner_selector"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtObservacion"
+            android:hint="@string/Ingrese_Observaciones"
+            android:lines="3" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/Aceptar"
+            android:id="@+id/btnAceptarFinalizar"
+            android:background="@color/colorPrimary"
+            android:textColor="@color/Blanco"
+            android:textStyle="bold"
+            android:layout_marginRight="5dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp" />
+
+    </LinearLayout>
+
+</LinearLayout>

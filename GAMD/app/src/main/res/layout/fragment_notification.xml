@@ -35,12 +35,12 @@
                     android:id="@+id/lblAceptacion"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/SolicitudAceptada"
+                    android:text="@string/ZonaNotificacion"
                     android:textStyle="bold"
                     android:textColor="@color/colorAccent"
                     android:textColorLink="@color/colorPrimary"
                     android:textAppearance="?android:attr/textAppearanceButton"
-                    android:textSize="@dimen/label_titulo_text_size"
+                    android:textSize="20sp"
                     android:layout_weight=".9"
                     android:gravity="left"
                     android:textIsSelectable="false" />
@@ -52,7 +52,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/lblMensaje"
-                android:hint="@string/Vacio" />
+                android:hint="@string/NoHayNotificaciones" />
 
             <Button
                 android:layout_width="fill_parent"

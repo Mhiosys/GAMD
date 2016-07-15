@@ -16,6 +16,7 @@ public class SeekMedicalAttentionModel {
     private int SolicitudId;
     private String Observacion;
     private int EspecialistaId;
+    private String FechaHoraAtencion;
 
     public String getServicioId() {
         return ServicioId;
@@ -111,5 +112,13 @@ public class SeekMedicalAttentionModel {
 
     public void setEspecialistaId(int especialistaId) {
         EspecialistaId = especialistaId;
+    }
+
+    public String getFechaHoraAtencion() {
+        return FechaHoraAtencion;
+    }
+
+    public void setFechaHoraAtencion(String fechaHoraAtencion) {
+        FechaHoraAtencion = fechaHoraAtencion;
     }
 }

@@ -39,11 +39,8 @@ public class AtencionItemAdapter extends ArrayAdapter {
             item = inflater.inflate(R.layout.list_item_atencion, null);
 
             atencionHolder = new AtencionHolder();
-            atencionHolder.solicitudId = (TextView)item.findViewById(R.id.lblSolicitudId);
-            atencionHolder.clienteId = (TextView)item.findViewById(R.id.lblClienteId);
             atencionHolder.direccion = (TextView)item.findViewById(R.id.lblDireccion);
-            atencionHolder.fechaAtencion = (TextView)item.findViewById(R.id.lblFecha);
-            atencionHolder.horaAtencion = (TextView)item.findViewById(R.id.lblHora);
+            atencionHolder.fechaHoraAtencion = (TextView)item.findViewById(R.id.lblFecha);
 
             item.setTag(atencionHolder);
         }
@@ -53,11 +50,8 @@ public class AtencionItemAdapter extends ArrayAdapter {
         }
 
         SeekMedicalAttentionModel seekMedicalAttention = this.source.get(position);
-        atencionHolder.solicitudId.setText(String.valueOf(seekMedicalAttention.getSolicitudId()));
-        atencionHolder.clienteId.setText(String.valueOf(seekMedicalAttention.getClienteId()));
         atencionHolder.direccion.setText(seekMedicalAttention.getDireccion());
-        atencionHolder.fechaAtencion.setText(seekMedicalAttention.getFechaAtencion());
-        atencionHolder.horaAtencion.setText(seekMedicalAttention.getHoraAtencion());
+        atencionHolder.fechaHoraAtencion.setText(seekMedicalAttention.getFechaHoraAtencion());
 
         return item;
     }

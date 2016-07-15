@@ -67,6 +67,12 @@
     <string name="Horario_12">2:00 am - 4:00 am</string>
     <string name="Horario_13">4:00 am - 6:00 am</string>
 
+    <string name="Uno">1</string>
+    <string name="Dos">2</string>
+    <string name="Tres">3</string>
+    <string name="Cuatro">4</string>
+    <string name="Cinco">5</string>
+
     <!-- Nombres de los Tipos de Servicios -->
     <string-array name="tipo_servicio_items">
         <item>Tipo Servicio 01</item>
@@ -141,9 +147,11 @@
     <string name="Olvido_Clave_Subrayado"><u>Olvidé mi contraseña</u></string>
     <string name="Solicitar">Solicitar</string>
     <string name="SolicitudAceptada">Solicitud Aceptada</string>
+    <string name="ZonaNotificacion">Notificaciones</string>
     <string name="Pedir_Aqui">Pedir aquí</string>
     <string name="title_activity_maps">Map</string>
     <string name="Vacio">Vacio</string>
+    <string name="NoHayNotificaciones">No hay notificaicones</string>
     <string name="Cancelar_Cita">Cancelar Cita</string>
     <string name="Cerrar">Cerrar</string>
     <string name="Cancelar">Cancelar</string>
@@ -151,12 +159,17 @@
     <string name="Solicitud_Pendiente">Solicitud Pendiente</string>
     <string name="Confirmar_Llegada">Confirmar Llegada</string>
     <string name="Finalizar_Servicio">Finalizar Servicio</string>
+    <string name="Finalizar_Servicio_Capital">FINALIZAR SERVICIO</string>
     <string name="Esta_seguro_llegada">¿Está seguro que desea confirmar su llegada?</string>
     <string name="Esta_seguro_finalizar">¿Está seguro que desea Finalizar el servicio?</string>
     <string name="Confirmación">Confirmación</string>
     <string name="Esta_seguro_confirmacion">¿Está seguro de cancelar la cita?</string>
     <string name="Solicitudes_Pendientes">Solicitudes Pendientes</string>
     <string name="Solicitudes_En_Curso">Solicitudes En Curso</string>
+    <string name="Observaciones">Observaciones</string>
+    <string name="Ingrese_Observaciones">Ingrese sus observaciones</string>
+    <string name="Encuesta_Servicio_Capital">ENCUESTA DEL SERVICIO</string>
+    <string name="Mensaje_Subtitulo_Encuensta">Antes de terminar nuestra atención, por favor proceda a calificar nuestra atención</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -169,4 +182,7 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="direccion">Dirección</string>
+    <string name="fecha">Fecha</string>
+    <string name="hora">Hora</string>
 </resources>

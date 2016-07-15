@@ -59,4 +59,7 @@ public class Constantes {
     public static final String KEY_SERVER = "AIzaSyClxJKVx2-Bb4G84UE5Jd0tMJJNfKXoKdY";
     public static final String NOTIFICATION_ID = "NOTIFICATION_ID";
     public static final String NOTIFICATION_MESSAGE = "NOTIFICATION_MESSAGE";
+    public static final String NOTIFICATION_TYPE = "NOTIFICATION_TYPE";
+    public static final String NOTIFICATION_TYPE_CONFIRMACION = "2";
+    public static final String NOTIFICATION_TYPE_FINALIZACION = "3";
 }

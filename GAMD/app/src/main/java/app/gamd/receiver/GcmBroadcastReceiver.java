@@ -38,9 +38,11 @@ public class GcmBroadcastReceiver extends GcmListenerService {
     public void onMessageReceived(String from, Bundle data) {
         String message = data.getString("message");
         int requestCode = Integer.parseInt(data.getString("requestCode"));
+        String tipo = data.getString("tipo");
         Log.d(TAG, "From: " + from);
         Log.d(TAG, "Message: " + message);
         Log.d(TAG, "RequestCode: " + requestCode);
+        Log.d(TAG, "tipo: " + tipo);
 
         if (from.startsWith("/topics/")) {
             // message received from some topic.
@@ -60,7 +62,7 @@ public class GcmBroadcastReceiver extends GcmListenerService {
          * In some cases it may be useful to show a notification indicating to the user
          * that a message was received.
          */
-        sendNotification(requestCode, message);
+        sendNotification(requestCode, message, tipo);
         // [END_EXCLUDE]
     }
     // [END receive_message]
@@ -70,13 +72,22 @@ public class GcmBroadcastReceiver extends GcmListenerService {
      *
      * @param message GCM message received.
      */
-    private void sendNotification(int requestCode, String message) {
+    private void sendNotification(int requestCode, String message, String tipo) {
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra(Constantes.NOTIFICATION_ID, requestCode);
         intent.putExtra(Constantes.NOTIFICATION_MESSAGE, message);
+        intent.putExtra(Constantes.NOTIFICATION_TYPE, tipo);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, requestCode, intent,
                 PendingIntent.FLAG_ONE_SHOT);
+
+        String tituloNotificacion = "GAMD - Solicitud Aceptada";
+        if(tipo.equals(Constantes.NOTIFICATION_TYPE_CONFIRMACION))
+        {
+            tituloNotificacion = "GAMD - Inicio de Atención Médica";
+        }else if(tipo.equals(Constantes.NOTIFICATION_TYPE_FINALIZACION)){
+            tituloNotificacion = "GAMD - Final de Atención Médica";
+        }
 
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         CharSequence ticker ="Nueva entrada en Zona";
@@ -85,7 +96,7 @@ public class GcmBroadcastReceiver extends GcmListenerService {
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.icon)
                 .setLargeIcon(icon)
-                .setContentTitle("GAMD - Solicitud Aceptada")
+                .setContentTitle(tituloNotificacion)
                 .setContentText(message)
                         //.setAutoCancel(true)
                 .setWhen(System.currentTimeMillis())
@@ -95,7 +106,6 @@ public class GcmBroadcastReceiver extends GcmListenerService {
                 .addAction(R.drawable.cast_ic_notification_1, ticker, pendingIntent)
                 .setContentIntent(pendingIntent)
                 .setTicker("GAMD - Notificacion");
-
 
 
         NotificationManager notificationManager =

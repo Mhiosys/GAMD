@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -16,23 +15,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
-
-import com.google.gson.internal.LinkedTreeMap;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import app.gamd.MainActivity;
 import app.gamd.R;
 import app.gamd.adapter.AtencionItemAdapter;
 import app.gamd.common.Constantes;
 import app.gamd.common.JsonResponse;
 import app.gamd.contract.ISeekMedicalAttentionService;
+import app.gamd.dialogfragment.FinalizarCitaDialogFragment;
+import app.gamd.dialogfragment.FinalizarCitaDialogFragment.OnRegistrarListener;
 import app.gamd.model.SeekMedicalAttentionModel;
-import app.gamd.model.SpecialistModel;
 import app.gamd.service.ServiceGenerator;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -41,7 +37,7 @@ import retrofit.client.Response;
 /**
  * Created by Sigcomt on 12/07/2016.
  */
-public class AppointmentAttentionFragment extends Fragment {
+public class AppointmentAttentionFragment extends Fragment implements OnRegistrarListener {
 
     ListView lvAtencionPendiente, lvAtencionEnCurso;
     ProgressDialog progress;
@@ -98,6 +94,7 @@ public class AppointmentAttentionFragment extends Fragment {
                         seekMedicalAttentionItemModelFila.setDireccion(mapper.get("Direccion").toString());
                         seekMedicalAttentionItemModelFila.setFechaAtencion(mapper.get("FechaCita").toString().substring(0,10));
                         seekMedicalAttentionItemModelFila.setHoraAtencion(mapper.get("HoraCita").toString());
+                        seekMedicalAttentionItemModelFila.setFechaHoraAtencion(seekMedicalAttentionItemModelFila.getFechaAtencion() + " " + seekMedicalAttentionItemModelFila.getHoraAtencion());
                         seekMedicalAttentionItemModelListJson.add(seekMedicalAttentionItemModelFila);
                     }
 
@@ -130,6 +127,7 @@ public class AppointmentAttentionFragment extends Fragment {
     private void showDialogConfirmar(int numeroSolicitud){
         final int solicitudId = numeroSolicitud;
         new AlertDialog.Builder(getActivity())
+                .setCancelable(false)
                 .setTitle(R.string.Confirmar_Llegada)
                 .setMessage(R.string.Esta_seguro_llegada)
                 .setPositiveButton(R.string.Aceptar, new DialogInterface.OnClickListener() {
@@ -178,6 +176,7 @@ public class AppointmentAttentionFragment extends Fragment {
                         seekMedicalAttentionItemModelFila.setDireccion(mapper.get("Direccion").toString());
                         seekMedicalAttentionItemModelFila.setFechaAtencion(mapper.get("FechaCita").toString().substring(0,10));
                         seekMedicalAttentionItemModelFila.setHoraAtencion(mapper.get("HoraCita").toString());
+                        seekMedicalAttentionItemModelFila.setFechaHoraAtencion(seekMedicalAttentionItemModelFila.getFechaAtencion() + " " + seekMedicalAttentionItemModelFila.getHoraAtencion());
                         seekMedicalAttentionItemModelListJson.add(seekMedicalAttentionItemModelFila);
                     }
 
@@ -189,7 +188,15 @@ public class AppointmentAttentionFragment extends Fragment {
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                             Log.d(TAG, String.valueOf(position));
                             int solicitudId = ((SeekMedicalAttentionModel) parent.getAdapter().getItem(position)).getSolicitudId();
-                            showDialogFinalizar(solicitudId);
+
+                            FinalizarCitaDialogFragment dialog = new FinalizarCitaDialogFragment(AppointmentAttentionFragment.this);
+                            Bundle bundle = new Bundle();
+                            bundle.putInt("solicitudId", solicitudId);
+                            dialog.setArguments(bundle);
+                            dialog.setCancelable(false);
+                            dialog.show( getActivity().getFragmentManager(), "dialog");
+
+                            //showDialogFinalizar(solicitudId);
                         }
                     });
 
@@ -205,28 +212,6 @@ public class AppointmentAttentionFragment extends Fragment {
 
             }
         });
-    }
-
-    private void showDialogFinalizar(int numeroSolicitud){
-        final int solicitudId = numeroSolicitud;
-        new AlertDialog.Builder(getActivity())
-                .setTitle(R.string.Finalizar_Servicio)
-                .setMessage(R.string.Esta_seguro_finalizar)
-                .setPositiveButton(R.string.Aceptar, new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        finalizarCita(solicitudId);
-                    }
-                })
-                .setNegativeButton(R.string.Cancelar, new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                }).show();
-
     }
 
     private void confirmarLlegadaCita(int numeroSolicitud){
@@ -260,14 +245,14 @@ public class AppointmentAttentionFragment extends Fragment {
 
     }
 
-    private void finalizarCita(int numeroSolicitud){
+    private void finalizarCita(int numeroSolicitud, String observacion){
         progress = new ProgressDialog(getActivity());
         progress.setMessage(Constantes.ENVIANDO_SOLICITUD);
         progress.show();
 
         SeekMedicalAttentionModel seekMedicalAttentionModel = new SeekMedicalAttentionModel();
         seekMedicalAttentionModel.setSolicitudId(numeroSolicitud);
-        seekMedicalAttentionModel.setObservacion("Todo OK");
+        seekMedicalAttentionModel.setObservacion(observacion);
         ISeekMedicalAttentionService seekMedicalAttentionService = ServiceGenerator.createService(ISeekMedicalAttentionService.class);
         seekMedicalAttentionService.finalizarCita(seekMedicalAttentionModel, new Callback<JsonResponse>() {
             @Override
@@ -314,6 +299,11 @@ public class AppointmentAttentionFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onRegistrar(int solicitudId, String observacion) {
+        finalizarCita(solicitudId, observacion);
     }
 
     /**

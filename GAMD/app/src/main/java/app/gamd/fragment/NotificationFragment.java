@@ -109,25 +109,27 @@ public class NotificationFragment extends Fragment implements FinalizarEncuestaD
         progress.show();
 
         ArrayList<PreguntaEncuestaSolicitudModel> preguntaEncuestaSolicitudModelList = new ArrayList<PreguntaEncuestaSolicitudModel>();
-        PreguntaEncuestaSolicitudModel preguntaEncuestaSolicitudModel = new PreguntaEncuestaSolicitudModel();
 
-        preguntaEncuestaSolicitudModel.setSolicitudId(solicitudId);
-        preguntaEncuestaSolicitudModel.setPreguntaEncuestaId(pregunta1Id);
-        preguntaEncuestaSolicitudModel.setCalificacion(respuesta1);
-        preguntaEncuestaSolicitudModel.setObservacion(observaciones);
-        preguntaEncuestaSolicitudModelList.add(preguntaEncuestaSolicitudModel);
+        PreguntaEncuestaSolicitudModel preguntaEncuestaSolicitudModel1 = new PreguntaEncuestaSolicitudModel();
+        preguntaEncuestaSolicitudModel1.setSolicitudId(solicitudId);
+        preguntaEncuestaSolicitudModel1.setPreguntaEncuestaId(pregunta1Id);
+        preguntaEncuestaSolicitudModel1.setCalificacion(respuesta1);
+        preguntaEncuestaSolicitudModel1.setObservacion(observaciones);
+        preguntaEncuestaSolicitudModelList.add(preguntaEncuestaSolicitudModel1);
 
-        preguntaEncuestaSolicitudModel.setSolicitudId(solicitudId);
-        preguntaEncuestaSolicitudModel.setPreguntaEncuestaId(pregunta2Id);
-        preguntaEncuestaSolicitudModel.setCalificacion(respuesta2);
-        preguntaEncuestaSolicitudModel.setObservacion(observaciones);
-        preguntaEncuestaSolicitudModelList.add(preguntaEncuestaSolicitudModel);
+        PreguntaEncuestaSolicitudModel preguntaEncuestaSolicitudModel2 = new PreguntaEncuestaSolicitudModel();
+        preguntaEncuestaSolicitudModel2.setSolicitudId(solicitudId);
+        preguntaEncuestaSolicitudModel2.setPreguntaEncuestaId(pregunta2Id);
+        preguntaEncuestaSolicitudModel2.setCalificacion(respuesta2);
+        preguntaEncuestaSolicitudModel2.setObservacion(observaciones);
+        preguntaEncuestaSolicitudModelList.add(preguntaEncuestaSolicitudModel2);
 
-        preguntaEncuestaSolicitudModel.setSolicitudId(solicitudId);
-        preguntaEncuestaSolicitudModel.setPreguntaEncuestaId(pregunta3Id);
-        preguntaEncuestaSolicitudModel.setCalificacion(respuesta3);
-        preguntaEncuestaSolicitudModel.setObservacion(observaciones);
-        preguntaEncuestaSolicitudModelList.add(preguntaEncuestaSolicitudModel);
+        PreguntaEncuestaSolicitudModel preguntaEncuestaSolicitudModel3 = new PreguntaEncuestaSolicitudModel();
+        preguntaEncuestaSolicitudModel3.setSolicitudId(solicitudId);
+        preguntaEncuestaSolicitudModel3.setPreguntaEncuestaId(pregunta3Id);
+        preguntaEncuestaSolicitudModel3.setCalificacion(respuesta3);
+        preguntaEncuestaSolicitudModel3.setObservacion(observaciones);
+        preguntaEncuestaSolicitudModelList.add(preguntaEncuestaSolicitudModel3);
 
         IEncuestaService encuestaService = ServiceGenerator.createService(IEncuestaService.class);
         encuestaService.registrarEncuesta(preguntaEncuestaSolicitudModelList, new Callback<JsonResponse>() {

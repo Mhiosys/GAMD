@@ -81,7 +81,7 @@ public class FinalizarEncuestaDialogFragment extends DialogFragment {
         txtPregunta2 = (TextView) viewFinalizarEncuestaDialogFragment.findViewById(R.id.txtPregunta2);
         txtPregunta3 = (TextView) viewFinalizarEncuestaDialogFragment.findViewById(R.id.txtPregunta3);
 
-        txtObservacion = (EditText) viewFinalizarEncuestaDialogFragment.findViewById(R.id.txtObservacion);
+        txtObservacion = (EditText) viewFinalizarEncuestaDialogFragment.findViewById(R.id.txtObservacionEncuesta);
         btnAceptar = (Button) viewFinalizarEncuestaDialogFragment.findViewById(R.id.btnAceptarFinalizar);
 
         spPregunta1 = (Spinner) viewFinalizarEncuestaDialogFragment.findViewById(R.id.spPregunta1);
@@ -122,8 +122,8 @@ public class FinalizarEncuestaDialogFragment extends DialogFragment {
 
     private boolean validarEnvio(){
         boolean result = true;
-        String direccion = this.txtObservacion.getText().toString();
-        if(direccion.equals("")
+        String observacion = this.txtObservacion.getText().toString();
+        if(observacion.equals("")
                 || spPregunta1.getSelectedItemPosition()==0
                 || spPregunta2.getSelectedItemPosition()==0
                 || spPregunta3.getSelectedItemPosition()==0){

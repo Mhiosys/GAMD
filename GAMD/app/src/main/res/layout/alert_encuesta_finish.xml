@@ -126,7 +126,7 @@
         <EditText
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/txtObservacion"
+            android:id="@+id/txtObservacionEncuesta"
             android:hint="@string/Ingrese_Observaciones"
             android:lines="3" />
 

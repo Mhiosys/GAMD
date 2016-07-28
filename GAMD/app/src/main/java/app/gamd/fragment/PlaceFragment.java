@@ -50,18 +50,12 @@ public class PlaceFragment extends Fragment implements GoogleApiClient.OnConnect
      * to the user's sign in state as well as the Google's APIs.
      */
     protected GoogleApiClient mGoogleApiClient;
-
     private PlacesAutoCompleteAdapter mAdapter;
-
     private AutoCompleteTextView mAutocompleteView;
-
     private TextView mPlaceDetailsText, mPlaceDetailsAttribution;
-
     private Button clearButton;
-
     private static final LatLngBounds BOUNDS_GREATER_SYDNEY = new LatLngBounds(
             new LatLng(-34.041458, 150.790100), new LatLng(-33.682247, 151.383362));
-
     private OnFragmentInteractionListener mListener;
 
     public PlaceFragment() {

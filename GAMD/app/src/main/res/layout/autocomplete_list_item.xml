@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/spinner_item_selector"
+    android:orientation="vertical"
+    android:padding="3dp" >
+
+    <TextView android:id="@+id/txtUbicacion1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dip"
+        android:textColor="@color/Negro" />
+
+    <TextView
+        android:id="@+id/txtUbicacion2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/Negro" />
+
+</LinearLayout>

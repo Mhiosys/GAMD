@@ -48,11 +48,29 @@
             </LinearLayout>
 
 
-            <EditText
+            <AutoCompleteTextView
+                android:id="@+id/autocomplete_places"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/txtDireccionS"
-                android:hint="@string/Direccion_Atencion" />
+                android:layout_gravity="center_horizontal"
+                android:hint="@string/Direccion_Atencion"
+                android:singleLine="true" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:src="@drawable/powered_by_google_light"
+                android:contentDescription="@string/Imagen" />
+
+            <TextView
+                android:id="@+id/place_attribution"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:autoLink="all"
+                android:text=""
+                android:paddingTop="20dp"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <Button
                 android:layout_width="fill_parent"

@@ -6,12 +6,21 @@ package app.gamd.model;
 public class SpinnerModel {
     private String codigo;
     private String nombre;
+    private String codigoParent;
     private int icono;
 
     public SpinnerModel(String codigo, String nombre, int icono){
         super();
         this.codigo = codigo;
         this.nombre = nombre;
+        this.icono = icono;
+    }
+
+    public SpinnerModel(String codigo, String nombre, int icono, String codigoParent){
+        super();
+        this.codigo = codigo;
+        this.nombre = nombre;
+        this.codigoParent = codigoParent;
         this.icono = icono;
     }
 
@@ -37,5 +46,13 @@ public class SpinnerModel {
 
     public void setCodigo(String codigo) {
         this.codigo = codigo;
+    }
+
+    public String getCodigoParent() {
+        return codigoParent;
+    }
+
+    public void setCodigoParent(String codigoParent) {
+        this.codigoParent = codigoParent;
     }
 }

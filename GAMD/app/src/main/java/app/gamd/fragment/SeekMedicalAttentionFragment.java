@@ -334,28 +334,29 @@ public class SeekMedicalAttentionFragment extends Fragment
                     Log.d(TAG, jsonResponse.getData().toString());
                     tipoList = (ArrayList) jsonResponse.getData();
 
-                    for (TipoModel item : tipoList) {
-                        if(item.getTipo().equals("1")){
-                            if(item.getCodigo().equals("0")){
-                                tipoServicioList.add(new SpinnerModel(item.getCodigo(), item.getNombre(), R.drawable.ic_action_cancel, item.getCodigoParent()));
+                    for (Object item : tipoList) {
+                        Map mapper = (Map) item;
+                        if(mapper.get("Tipo").toString().equals("1")){
+                            if(mapper.get("Codigo").toString().equals("0")){
+                                tipoServicioList.add(new SpinnerModel(mapper.get("Codigo").toString(),  mapper.get("Nombre").toString(), R.drawable.ic_action_cancel,  mapper.get("CodigoParent").toString()));
                             }else{
-                                tipoServicioList.add(new SpinnerModel(item.getCodigo(), item.getNombre(), R.drawable.ic_action_accept, item.getCodigoParent()));
+                                tipoServicioList.add(new SpinnerModel(mapper.get("Codigo").toString(),  mapper.get("Nombre").toString(), R.drawable.ic_action_accept,  mapper.get("CodigoParent").toString()));
                             }
                         }
 
-                        if(item.getTipo().equals("2")){
-                            if(item.getCodigo().equals("0")){
-                                especialistaList.add(new SpinnerModel(item.getCodigo(), item.getNombre(), R.drawable.ic_action_cancel, item.getCodigoParent()));
+                        if(mapper.get("Tipo").toString().equals("2")){
+                            if(mapper.get("Codigo").toString().equals("0")){
+                                especialistaList.add(new SpinnerModel(mapper.get("Codigo").toString(),  mapper.get("Nombre").toString(), R.drawable.ic_action_cancel,  mapper.get("CodigoParent").toString()));
                             }else{
-                                especialistaList.add(new SpinnerModel(item.getCodigo(), item.getNombre(), R.drawable.ic_action_accept, item.getCodigoParent()));
+                                especialistaList.add(new SpinnerModel(mapper.get("Codigo").toString(),  mapper.get("Nombre").toString(), R.drawable.ic_action_accept,  mapper.get("CodigoParent").toString()));
                             }
                         }
 
-                        if(item.getTipo().equals("3")){
-                            if(item.getCodigo().equals("0")){
-                                servicioList.add(new SpinnerModel(item.getCodigo(), item.getNombre(), R.drawable.ic_action_cancel, item.getCodigoParent()));
+                        if(mapper.get("Tipo").toString().equals("3")){
+                            if(mapper.get("Codigo").toString().equals("0")){
+                                servicioList.add(new SpinnerModel(mapper.get("Codigo").toString(),  mapper.get("Nombre").toString(), R.drawable.ic_action_cancel,  mapper.get("CodigoParent").toString()));
                             }else{
-                                servicioList.add(new SpinnerModel(item.getCodigo(), item.getNombre(), R.drawable.ic_action_accept, item.getCodigoParent()));
+                                servicioList.add(new SpinnerModel(mapper.get("Codigo").toString(), mapper.get("Nombre").toString(), R.drawable.ic_action_accept,  mapper.get("CodigoParent").toString()));
                             }
                         }
 
@@ -376,7 +377,7 @@ public class SeekMedicalAttentionFragment extends Fragment
                                 }
                             }
 
-                            spEspecialidad.setAdapter(new SpinnerAdapter(getActivity(), R.layout.spinner_selected_item, items));
+                            spEspecialidad.setAdapter(new SpinnerAdapter(getActivity().getApplicationContext(), R.layout.spinner_selected_item, items));
 
                             spEspecialidad.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                                 @Override

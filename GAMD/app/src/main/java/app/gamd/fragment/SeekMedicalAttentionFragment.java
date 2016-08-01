@@ -132,8 +132,8 @@ public class SeekMedicalAttentionFragment extends Fragment
         spTipoServicio = (Spinner)viewSeekMedicalFragment.findViewById(R.id.spTipoServicio);
         spEspecialidad = (Spinner)viewSeekMedicalFragment.findViewById(R.id.spEspecialidad);
         spServicio = (Spinner)viewSeekMedicalFragment.findViewById(R.id.spServicio);
-        spEspecialidad.setEnabled(false);
-        spServicio.setEnabled(false);
+        //spEspecialidad.setEnabled(false);
+        //spServicio.setEnabled(false);
 
         mGoogleApiClient = new GoogleApiClient.Builder(getActivity().getApplicationContext())
                 .enableAutoManage(getActivity(), this)
@@ -334,6 +334,8 @@ public class SeekMedicalAttentionFragment extends Fragment
                     Log.d(TAG, jsonResponse.getData().toString());
                     tipoList = (ArrayList) jsonResponse.getData();
 
+                    tipoServicioList.add(new SpinnerModel("0", getString(R.string.Ninguno), R.drawable.ic_action_cancel));
+
                     for (Object item : tipoList) {
                         Map mapper = (Map) item;
                         if(mapper.get("Tipo").toString().equals("1")){
@@ -366,33 +368,33 @@ public class SeekMedicalAttentionFragment extends Fragment
                     spTipoServicio.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-                            List<SpinnerModel> items = new ArrayList<SpinnerModel>();
-                            items.add(new SpinnerModel("0", getString(R.string.Ninguno), R.drawable.ic_action_cancel));
+                            List<SpinnerModel> itemsEspecialista = new ArrayList<SpinnerModel>();
+                            itemsEspecialista.add(new SpinnerModel("0", getString(R.string.Ninguno), R.drawable.ic_action_cancel));
                             String codigo = ((TextView) view.findViewById(R.id.codigo)).getText().toString();
 
                             for (SpinnerModel item : especialistaList) {
                                 if(item.getCodigoParent().equals(codigo))
                                 {
-                                    items.add(new SpinnerModel(item.getCodigo(),item.getNombre(),R.drawable.ic_action_accept, item.getCodigoParent()));
+                                    itemsEspecialista.add(new SpinnerModel(item.getCodigo(),item.getNombre(),R.drawable.ic_action_accept, item.getCodigoParent()));
                                 }
                             }
 
-                            spEspecialidad.setAdapter(new SpinnerAdapter(getActivity().getApplicationContext(), R.layout.spinner_selected_item, items));
+                            spEspecialidad.setAdapter(new SpinnerAdapter(getActivity().getApplicationContext(), R.layout.spinner_selected_item, itemsEspecialista));
 
                             spEspecialidad.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                                 @Override
                                 public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-                                    List<SpinnerModel> items = new ArrayList<SpinnerModel>();
-                                    items.add(new SpinnerModel("0", getString(R.string.Ninguno), R.drawable.ic_action_cancel));
+                                    List<SpinnerModel> itemsServicio = new ArrayList<SpinnerModel>();
+                                    itemsServicio.add(new SpinnerModel("0", getString(R.string.Ninguno), R.drawable.ic_action_cancel));
                                     String codigo = ((TextView) view.findViewById(R.id.codigo)).getText().toString();
 
                                     for (SpinnerModel item : servicioList) {
                                         if(item.getCodigoParent().equals(codigo))
                                         {
-                                            items.add(new SpinnerModel(item.getCodigo(),item.getNombre(),R.drawable.ic_action_accept, item.getCodigoParent()));
+                                            itemsServicio.add(new SpinnerModel(item.getCodigo(),item.getNombre(),R.drawable.ic_action_accept, item.getCodigoParent()));
                                         }
                                     }
-                                    spServicio.setAdapter(new SpinnerAdapter(getActivity().getApplicationContext(), R.layout.spinner_selected_item, items));
+                                    spServicio.setAdapter(new SpinnerAdapter(getActivity().getApplicationContext(), R.layout.spinner_selected_item, itemsServicio));
                                 }
 
                                 @Override

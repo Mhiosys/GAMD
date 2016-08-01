@@ -69,6 +69,7 @@ public class MainActivity extends AppCompatActivity
 
         sharedPreferences = getApplicationContext().getSharedPreferences(Constantes.PREFERENCES, Context.MODE_PRIVATE);;
 
+        /*
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt(Constantes.SETTING_USUARIOID, 1);
         editor.putString(Constantes.SETTING_USERNAME, "mijailstell@gmail.com");
@@ -80,7 +81,7 @@ public class MainActivity extends AppCompatActivity
         editor.putString(Constantes.SETTING_CELULAR, Constantes.NUMERO_DEFAULT);
         editor.putString(Constantes.SETTING_CONTINUAR, "1");
         editor.commit();
-
+        */
         String username = sharedPreferences.getString(Constantes.SETTING_USERNAME, null);
 
         if(username==null) {
@@ -372,10 +373,10 @@ public class MainActivity extends AppCompatActivity
             startActivity(Intent.createChooser(sharingIntent, "Share via"));
 
         }  else if (id == R.id.nav_about) {
-            /*item.setChecked(true);
-            getSupportActionBar().setTitle(item.getTitle());*/
-            fragment = new PlaceFragment();
-            fragmentTransaction = true;
+            item.setChecked(true);
+            getSupportActionBar().setTitle(item.getTitle());
+            /*fragment = new PlaceFragment();
+            fragmentTransaction = true;*/
         } else if (id == R.id.nav_logout) {
 
             sharedPreferences.edit().remove(Constantes.SETTING_USERNAME).commit();

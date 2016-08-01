@@ -122,9 +122,7 @@ public class FinalizarEncuestaDialogFragment extends DialogFragment {
 
     private boolean validarEnvio(){
         boolean result = true;
-        String observacion = this.txtObservacion.getText().toString();
-        if(observacion.equals("")
-                || spPregunta1.getSelectedItemPosition()==0
+        if(spPregunta1.getSelectedItemPosition()==0
                 || spPregunta2.getSelectedItemPosition()==0
                 || spPregunta3.getSelectedItemPosition()==0){
             result = false;

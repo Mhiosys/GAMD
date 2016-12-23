@@ -35,7 +35,8 @@ public class Constantes {
     public static final String ERROR_NO_CONTROLADO = "Conexión no establecida, sin acceso a internet";
     public static final String INGRESE_USERNAME_CLAVE = "Ingrese usuario y clave";
     public static final String USUARIO_INACTIVO = "Usuario inactivo";
-    public static final long EXPIRATION_TIME_MS = 1000 * 3600 * 24 * 7;
+    public static final long EXPIRATION_TIME_MS = 1000 * 300;
+    //public static final long EXPIRATION_TIME_MS = 1000 * 3600 * 24 * 7;
     public static final String INGRESE_TODOS_LOS_DATOS = "Ingrese todos los datos";
     public static final String SE_ENCONTRARON_MEDICOS= "Se encontraron los siguientes Médicos más cercanos a 2 KM";
     public static final String NO_SE_ENCONTRARON_MEDICOS= "No hay médicos disponibles cercanos a 2 KM";
